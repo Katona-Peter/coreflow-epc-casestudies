@@ -1,1 +1,1 @@
-web: gunicorn codeflowepc.wsgi
+web: gunicorn coreflowepc.wsgi
