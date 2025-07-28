@@ -1,5 +1,8 @@
 from django.shortcuts import render
-from django.http import HttpResponse
+from django.views import generic
+from .models import Casestudy
 
-def my_casestudy(request):
-    return HttpResponse("Hello, world!")
+class CasestudyList(generic.ListView):
+    queryset = Casestudy.objects.all()
+    template_name = "casestudy_list/index.html"
+    paginate_by = 4

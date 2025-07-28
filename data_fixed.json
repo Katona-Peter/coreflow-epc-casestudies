@@ -1,0 +1,261 @@
+[
+{
+  "model": "casestudy.client",
+  "pk": 1,
+  "fields": {
+    "client": "Veldon"
+  }
+},
+{
+  "model": "casestudy.client",
+  "pk": 2,
+  "fields": {
+    "client": "PetraCore"
+  }
+},
+{
+  "model": "casestudy.client",
+  "pk": 3,
+  "fields": {
+    "client": "Aurex"
+  }
+},
+{
+  "model": "casestudy.client",
+  "pk": 4,
+  "fields": {
+    "client": "Veltrion Chemical Technologies"
+  }
+},
+{
+  "model": "casestudy.client",
+  "pk": 5,
+  "fields": {
+    "client": "Kenvira Advanced Materials"
+  }
+},
+{
+  "model": "casestudy.client",
+  "pk": 6,
+  "fields": {
+    "client": "Cemtrix Industrial Materials"
+  }
+},
+{
+  "model": "casestudy.client",
+  "pk": 7,
+  "fields": {
+    "client": "Nuvexa Cement Technologies"
+  }
+},
+{
+  "model": "casestudy.client",
+  "pk": 8,
+  "fields": {
+    "client": "Ferrosyn Alloy Systems"
+  }
+},
+{
+  "model": "casestudy.client",
+  "pk": 9,
+  "fields": {
+    "client": "Helvra Steelworks International"
+  }
+},
+{
+  "model": "casestudy.client",
+  "pk": 10,
+  "fields": {
+    "client": "Ironvale Resources"
+  }
+},
+{
+  "model": "casestudy.client",
+  "pk": 11,
+  "fields": {
+    "client": "Terranova Minerals"
+  }
+},
+{
+  "model": "casestudy.location",
+  "pk": 1,
+  "fields": {
+    "location": "Clymar Junction"
+  }
+},
+{
+  "model": "casestudy.location",
+  "pk": 2,
+  "fields": {
+    "location": "Drayswick Delta"
+  }
+},
+{
+  "model": "casestudy.location",
+  "pk": 3,
+  "fields": {
+    "location": "Nexmoor Hills"
+  }
+},
+{
+  "model": "casestudy.location",
+  "pk": 4,
+  "fields": {
+    "location": "Solden Works"
+  }
+},
+{
+  "model": "casestudy.location",
+  "pk": 5,
+  "fields": {
+    "location": "Grenthorpe Reach"
+  }
+},
+{
+  "model": "casestudy.location",
+  "pk": 6,
+  "fields": {
+    "location": "Ferrock Hollow"
+  }
+},
+{
+  "model": "casestudy.location",
+  "pk": 7,
+  "fields": {
+    "location": "Redvale Basin"
+  }
+},
+{
+  "model": "casestudy.location",
+  "pk": 8,
+  "fields": {
+    "location": "Vectra Plains"
+  }
+},
+{
+  "model": "casestudy.industry",
+  "pk": 1,
+  "fields": {
+    "industry": "petrochemicals"
+  }
+},
+{
+  "model": "casestudy.industry",
+  "pk": 2,
+  "fields": {
+    "industry": "speciality chemicals"
+  }
+},
+{
+  "model": "casestudy.industry",
+  "pk": 3,
+  "fields": {
+    "industry": "cement"
+  }
+},
+{
+  "model": "casestudy.industry",
+  "pk": 4,
+  "fields": {
+    "industry": "steel"
+  }
+},
+{
+  "model": "casestudy.industry",
+  "pk": 5,
+  "fields": {
+    "industry": "mining"
+  }
+},
+{
+  "model": "casestudy.casestudy",
+  "pk": 8,
+  "fields": {
+    "title": "Fire & Gas Detection Network Installation",
+    "slug": "fire-gas-detection-network-installation",
+    "client": 1,
+    "location": 1,
+    "description": "Design and deploy a comprehensive F&G system across process units. Includes detector mapping, alarm rationalization workshops, and integration with Emergency Shutdown Systems (ESD).",
+    "excerpt": "Design and deploy a comprehensive F&G system across process units. Includes detector mapping, alarm rationalization workshops, and integration with Emergency Shutdown Systems (ESD).",
+    "industry": 1
+  }
+},
+{
+  "model": "casestudy.casestudy",
+  "pk": 9,
+  "fields": {
+    "title": "Emergency Drainage & Venting System Upgrade",
+    "slug": "emergency-drainage-venting-system-upgrade",
+    "client": 2,
+    "location": 2,
+    "description": "Redesign drainage and venting systems to handle worst-case scenarios. Includes dispersion modeling (PHAST or FLACS) and rerouting to safe locations",
+    "excerpt": "Redesign drainage and venting systems to handle worst-case scenarios. Includes dispersion modeling (PHAST or FLACS) and rerouting to safe locations",
+    "industry": 1
+  }
+},
+{
+  "model": "casestudy.casestudy",
+  "pk": 10,
+  "fields": {
+    "title": "Floating Roof Seal Replacement",
+    "slug": "floating-roof-seal-replacement",
+    "client": 3,
+    "location": 3,
+    "description": "Replace worn seals on floating roof tanks to prevent vapor emissions and reduce fire risk. May include secondary seal installation and rim vent upgrades.",
+    "excerpt": "Replace worn seals on floating roof tanks to prevent vapor emissions and reduce fire risk. May include secondary seal installation and rim vent upgrades.",
+    "industry": 1
+  }
+},
+{
+  "model": "casestudy.casestudy",
+  "pk": 11,
+  "fields": {
+    "title": "Fine Chemicals Multipurpose Facility",
+    "slug": "fine-chemicals-multipurpose-facility",
+    "client": 4,
+    "location": 4,
+    "description": "Design a flexible plant with interchangeable reactor skids, CIP systems, and batch automation to support rapid product changeovers",
+    "excerpt": "Design a flexible plant with interchangeable reactor skids, CIP systems, and batch automation to support rapid product changeovers",
+    "industry": 2
+  }
+},
+{
+  "model": "casestudy.casestudy",
+  "pk": 12,
+  "fields": {
+    "title": "Hazardous Waste Neutralization Unit",
+    "slug": "hazardous-waste-neutralization-unit",
+    "client": 5,
+    "location": 3,
+    "description": "Construct a dedicated unit for treating and neutralizing toxic byproducts from specialty chemical production. Includes scrubbers, incinerators, and real-time monitoring",
+    "excerpt": "Construct a dedicated unit for treating and neutralizing toxic byproducts from specialty chemical production. Includes scrubbers, incinerators, and real-time monitoring",
+    "industry": 2
+  }
+},
+{
+  "model": "casestudy.casestudy",
+  "pk": 13,
+  "fields": {
+    "title": "Waste-to-Fuel Co-processing Facility",
+    "slug": "waste-to-fuel-co-processing-facility",
+    "client": 6,
+    "location": 5,
+    "description": "Design and construct a facility that processes industrial and municipal waste into alternative fuels for cement kilns",
+    "excerpt": "Design and construct a facility that processes industrial and municipal waste into alternative fuels for cement kilns",
+    "industry": 3
+  }
+},
+{
+  "model": "casestudy.casestudy",
+  "pk": 14,
+  "fields": {
+    "title": "Modular Carbon Capture & Utilization (CCU) Unit",
+    "slug": "modular-carbon-capture-utilization-ccu-unit",
+    "client": 7,
+    "location": 6,
+    "description": "Install a modular CCU system to capture CO2 from cement production and convert it into useful products like aggregates or chemicals",
+    "excerpt": "Install a modular CCU system to capture CO2 from cement production and convert it into useful products like aggregates or chemicals",
+    "industry": 3
+  }
+}
+]
