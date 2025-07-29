@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<!-- index.html content starts here -->
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12 mt-3 left">
+            <div class="row">
+                {% for casestudy in casestudy_list %}
+                <div class="col-md-6 mb-4">
+                    <div class="card card-blue-margin">
+                        <div class="card-left">
+                            {% load static %}
+                            <img class="card-img-top" src="{% static 'images/default.png' %}" alt="placeholder image">
+                            
+                        </div>
+                        <div class="card-right">
+                            <div class="card-title-strip">
+                                <a href="{% url 'casestudy' casestudy.slug %}" class="casestudy-link">                                                       
+                                    <h2>{{ casestudy.title }}</h2>
+                                </a>                               
+                            </div>   
+                            <p>{{ casestudy.excerpt }}</p>                         
+                            <ul>
+                                <li><strong><i class="fas fa-user"></i>  Client:</strong> {{ casestudy.client }}</li>
+                                <li><strong><i class="fas fa-map-marker-alt"></i>  Location:</strong> {{ casestudy.location }}</li>
+                                <li><strong><i class="fas fa-industry"></i>  Industry:</strong> {{ casestudy.industry }}</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                {% if forloop.counter|divisibleby:2 %}
+                    </div><div class="row">
+                {% endif %}
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    {% if is_paginated %}
+    <ul class="pagination justify-content-center">
+        {% if page_obj.has_previous %}
+            <li class="page-item">
+                <a href="?page={{ page_obj.previous_page_number }}" class="page-link">&laquo; PREV</a>
+            </li>
+        {% endif %}
+        {% if page_obj.has_next %}
+            <li class="page-item">
+                <a href="?page={{ page_obj.next_page_number }}" class="page-link">NEXT &raquo;</a>
+            </li>
+        {% endif %}
+    </ul>
+    {% endif %}
+</div>
+
+<!-- index.html content ends here -->
+{% endblock %}
