@@ -14,7 +14,7 @@ class CasestudyDetail(generic.DetailView):
 
 def casestudy_detail(request, slug):
     
-    queryset = Casestudy.objects.filter(approved=1)
+    queryset = Casestudy.objects.all()
     casestudy = get_object_or_404(queryset, slug=slug)
 
     return render(
