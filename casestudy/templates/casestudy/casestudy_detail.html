@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<!-- casestudy_detail.html content starts here -->
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12 mt-3">
+            <div class="card">
+                <div class="card-header">
+                    <h1>{{ casestudy.title }}</h1>
+                </div>
+                <div class="card-body">
+                    {% load static %}
+                    <img class="img-fluid mb-3" src="{% static 'images/default.png' %}" alt="Case study image">
+                    
+                    <div class="row mb-3">
+                        <div class="col-md-4">
+                            <strong><i class="fas fa-user"></i> Client:</strong> {{ casestudy.client }}
+                        </div>
+                        <div class="col-md-4">
+                            <strong><i class="fas fa-map-marker-alt"></i> Location:</strong> {{ casestudy.location }}
+                        </div>
+                        <div class="col-md-4">
+                            <strong><i class="fas fa-industry"></i> Industry:</strong> {{ casestudy.industry }}
+                        </div>
+                    </div>
+                    
+                    <div class="description">
+                        <h3>Description</h3>
+                        <p>{{ casestudy.description }}</p>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <a href="{% url 'home' %}" class="btn btn-primary">
+                        <i class="fas fa-arrow-left"></i> Back to Case Studies
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- casestudy_detail.html content ends here -->
+{% endblock %}
