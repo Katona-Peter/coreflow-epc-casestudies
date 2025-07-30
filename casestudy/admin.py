@@ -11,8 +11,33 @@ class CasestudyAdmin(SummernoteModelAdmin):
     prepopulated_fields = {'slug': ('title',)}
     summernote_fields = ('description',)
 
+@admin.register(Comment)
+class CommentAdmin(admin.ModelAdmin):
+    list_display = ('casestudy', 'author', 'approved', 'created_on')
+    list_filter = ('approved', 'created_on')
+    search_fields = ('author__username', 'content', 'casestudy__title')
+    list_editable = ('approved',)
+    actions = ['approve_comments', 'disapprove_comments']
+    
+    def content_preview(self, obj):
+        """Show first 50 characters of comment content"""
+        return obj.content[:50] + "..." if len(obj.content) > 50 else obj.content
+    content_preview.short_description = 'Comment Preview'
+    
+    def approve_comments(self, request, queryset):
+        """Bulk action to approve selected comments"""
+        updated = queryset.update(approved=True)
+        self.message_user(request, f'{updated} comments were successfully approved.')
+    approve_comments.short_description = "Approve selected comments"
+    
+    def disapprove_comments(self, request, queryset):
+        """Bulk action to disapprove selected comments"""
+        updated = queryset.update(approved=False)
+        self.message_user(request, f'{updated} comments were successfully disapproved.')
+    disapprove_comments.short_description = "Disapprove selected comments"
+
 # Register your models here.
 admin.site.register(Client)
 admin.site.register(Location)
 admin.site.register(Industry)
-admin.site.register(Comment)
+# Comment is now registered with @admin.register decorator above

@@ -29,8 +29,9 @@ class Casestudy(models.Model):
     excerpt = models.TextField(null=True, blank=True)
     industry = models.ForeignKey(Industry, on_delete=models.CASCADE, related_name="industry_casestudy")
 
-# def __str__(self):
-     #   return f"{self.title} ({self.date})"
+    def __str__(self):
+        return self.title
+     
        
 class Comment(models.Model):
     casestudy = models.ForeignKey(Casestudy, on_delete=models.CASCADE, related_name="comments")

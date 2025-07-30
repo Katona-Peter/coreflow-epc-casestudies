@@ -58,12 +58,33 @@
                     </li>
                     {% endif %}
                 </ul>
-                <span class="navbar-text">
+                {% if user.is_authenticated %}
+                    <p class="text-end m-3" style="color: white !important; border: 2px solid white !important; padding: 8px 12px !important; border-radius: 6px !important; background-color: rgba(255, 255, 255, 0.1) !important; font-weight: 500 !important;">You are logged in as {{ user }}</p>
+                {% else %}
+                    <p class="text-end m-3" style="color: white !important; border: 2px solid white !important; padding: 8px 12px !important; border-radius: 6px !important; background-color: rgba(255, 255, 255, 0.1) !important; font-weight: 500 !important;">You are not logged in</p>
+                {% endif %}
+                <span class="navbar-text navbar-tagline" style="color: #C56B2B !important;">
                     Powering Industry, Designing Tomorrow
                 </span>
             </div>
         </div>
     </nav>
+
+    <!-- displaying Django messages -->
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8 offset-md-2">
+            {% for message in messages %}
+                <div class="alert {{ message.tags }} alert-dismissible
+                     fade show" id="msg" role="alert">
+                    {{ message | safe }}
+                    <button type="button" class="btn-close"
+                    data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            {% endfor %}
+            </div>
+        </div>
+    </div>
 
     <main class="flex-shrink-0 main-bg">
 
