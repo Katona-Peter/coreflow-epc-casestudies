@@ -44,10 +44,13 @@
     </div>
     <!-- Displaying count of comments -->
   <div class="row">
-    <div class="col-12">
+    <div class="col-12 d-flex justify-content-between align-items-center">
       <strong class="text-secondary">
         <i class="far fa-comments"></i> {{ comment_count }}
       </strong>
+      <button type="button" class="btn btn-sm btn-outline-info" data-bs-toggle="modal" data-bs-target="#messageHelpModal">
+        <i class="fas fa-question-circle me-1"></i> Message Help
+      </button>
     </div>
     <div class="col-12">
       <hr>
@@ -61,11 +64,14 @@
         <!-- We want a for loop inside the empty control tags
           to iterate through each comment in comments -->
         {% for comment in comments %}
-        <div class="p-2 comments
-          {% if comment.approved %}
-          <!-- Approved comment: show normally -->
-          {% elif not comment.approved and comment.author == user %}
-          faded{% else %} d-none{% endif %}">
+            {% if comment.approved %}
+                <div class="p-2 comments">
+            {% elif not comment.approved and comment.author == user %}
+                <div class="p-2 comments faded">
+            {% else %}
+                <div class="p-2 comments d-none">
+            {% endif %}
+          
           <p class="font-weight-bold">
             {{ comment.author }}
             <span class="font-weight-normal">
@@ -79,6 +85,10 @@
           <p class="approval">
             This comment is awaiting approval
           </p>
+          {% endif %}
+          {% if user.is_authenticated and comment.author == user %}
+            <button class="btn btn-edit" comment_id="{{ comment.id }}">Edit</button>
+            <button class="btn btn-delete" comment_id="{{ comment.id }}">Delete</button>
           {% endif %}
         </div>
         <!-- Our for loop ends here -->
@@ -109,4 +119,201 @@
 </div>
 
 <!-- casestudy_detail.html content ends here -->
+
+<!-- Include Messages Help Modal -->
+{% include 'includes/messages_help.html' %}
+
+{% endblock %}
+
+{% block extras %}
+<script>
+console.log("Script starting...");
+
+/**
+ * Initializes edit functionality for the provided edit buttons.
+ * 
+ * For each button in the editButtons collection:
+ * - Retrieves the associated comment's ID upon click.
+ * - Fetches the content of the corresponding comment.
+ * - Populates the commentText input/textarea with the comment's content for editing.
+ * - Updates the submit button's text to "Update".
+ * - Sets the form's action attribute to the edit_comment/{commentId} endpoint.
+ */
+
+document.addEventListener('DOMContentLoaded', function() {
+    console.log("DOM ready - starting comment edit initialization");
+    
+    // Get all edit buttons
+    const editButtons = document.getElementsByClassName("btn-edit");
+    console.log("Edit buttons found:", editButtons.length);
+    
+    // Get form elements
+    const commentForm = document.getElementById("commentForm");
+    const submitButton = document.getElementById("submitButton");
+    
+    console.log("Form found:", !!commentForm);
+    console.log("Submit button found:", !!submitButton);
+    
+    // Add click event to each edit button
+    for (let i = 0; i < editButtons.length; i++) {
+        const button = editButtons[i];
+        console.log("Adding event listener to button", i);
+        
+        button.addEventListener("click", function(e) {
+            e.preventDefault(); // Prevent any default behavior
+            console.log("=== EDIT BUTTON CLICKED ===");
+            
+            // Step 1: Retrieve the associated comment's ID upon click
+            const commentId = this.getAttribute("comment_id");
+            console.log("Step 1 - Comment ID retrieved:", commentId);
+            
+            if (!commentId) {
+                console.error("No comment_id attribute found on button");
+                return;
+            }
+            
+            // Step 2: Fetch the content of the corresponding comment
+            const commentElement = document.getElementById("comment" + commentId);
+            if (!commentElement) {
+                console.error("Step 2 - Comment element not found:", "comment" + commentId);
+                return;
+            }
+            
+            const commentContent = commentElement.innerText.trim();
+            console.log("Step 2 - Comment content fetched:", commentContent);
+            
+            // Step 3: Populate the commentText input/textarea with the comment's content for editing
+            const commentTextArea = document.querySelector("textarea[name='content']") ||
+                                  document.querySelector("#id_content") ||
+                                  document.querySelector("#commentForm textarea") ||
+                                  document.querySelector("textarea");
+            
+            if (!commentTextArea) {
+                console.error("Step 3 - Comment text area not found");
+                alert("Error: Could not find comment text field");
+                return;
+            }
+            
+            commentTextArea.value = commentContent;
+            console.log("Step 3 - Comment text area populated");
+            
+            // Step 4: Update the submit button's text to "Update"
+            if (submitButton) {
+                submitButton.innerText = "Update";
+                submitButton.className = "btn btn-primary btn-lg";
+                console.log("Step 4 - Submit button updated to 'Update'");
+            } else {
+                console.error("Step 4 - Submit button not found");
+            }
+            
+            // Step 5: Set the form's action attribute to the edit_comment/{commentId} endpoint
+            if (commentForm) {
+                commentForm.setAttribute("action", "edit_comment/" + commentId + "/");
+                console.log("Step 5 - Form action set to:", "edit_comment/" + commentId + "/");
+            } else {
+                console.error("Step 5 - Comment form not found");
+            }
+            
+            // Additional: Add cancel button
+            let cancelBtn = document.getElementById("cancelBtn");
+            if (!cancelBtn) {
+                cancelBtn = document.createElement("button");
+                cancelBtn.type = "button";
+                cancelBtn.id = "cancelBtn";
+                cancelBtn.className = "btn btn-secondary btn-lg ms-2";
+                cancelBtn.innerText = "Cancel";
+                
+                cancelBtn.onclick = function() {
+                    console.log("Cancel clicked - resetting form");
+                    commentTextArea.value = "";
+                    submitButton.innerText = "Submit";
+                    submitButton.className = "btn btn-signup btn-lg";
+                    commentForm.setAttribute("action", "");
+                    cancelBtn.remove();
+                };
+                
+                submitButton.parentNode.appendChild(cancelBtn);
+                console.log("Cancel button added");
+            }
+            
+            // Scroll to form
+            commentForm.scrollIntoView({ behavior: 'smooth' });
+            commentTextArea.focus();
+            
+            console.log("=== EDIT SETUP COMPLETE ===");
+        });
+    }
+    
+    console.log("All edit buttons initialized");
+    
+    // Add delete button functionality
+    const deleteButtons = document.getElementsByClassName("btn-delete");
+    console.log("Delete buttons found:", deleteButtons.length);
+    
+    for (let i = 0; i < deleteButtons.length; i++) {
+        const button = deleteButtons[i];
+        console.log("Adding delete event listener to button", i);
+        
+        button.addEventListener("click", function(e) {
+            e.preventDefault();
+            console.log("=== DELETE BUTTON CLICKED ===");
+            
+            const commentId = this.getAttribute("comment_id");
+            console.log("Comment ID for deletion:", commentId);
+            
+            if (!commentId) {
+                console.error("No comment_id attribute found on delete button");
+                return;
+            }
+            
+            // Set up the delete confirmation link
+            const deleteConfirmBtn = document.getElementById("deleteConfirm");
+            if (deleteConfirmBtn) {
+                // Get the current page slug from the URL
+                const currentPath = window.location.pathname;
+                const deleteUrl = currentPath + "delete_comment/" + commentId + "/";
+                deleteConfirmBtn.setAttribute("href", deleteUrl);
+                console.log("Delete URL set to:", deleteUrl);
+                
+                // Show the delete modal
+                const deleteModal = new bootstrap.Modal(document.getElementById('deleteModal'));
+                deleteModal.show();
+                console.log("Delete modal shown");
+            } else {
+                console.error("Delete confirm button not found");
+            }
+        });
+    }
+    
+    console.log("All delete buttons initialized");
+});
+
+console.log("Script loaded completely");
+</script>
+
+<!-- Delete confirmation modal -->
+<div class="modal fade" id="deleteModal" tabindex="-1"
+  aria-labelledby="deleteModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title"
+          id="deleteModalLabel">Delete comment?</h5>
+        <button type="button" class="btn-close"
+          data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        Are you sure you want to delete your comment?
+        This action cannot be undone.
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary"
+          data-bs-dismiss="modal">Close</button>
+        <a id="deleteConfirm" href="#" class="btn
+          btn-danger">Delete</a>
+      </div>
+    </div>
+  </div>
+</div>
+
 {% endblock %}

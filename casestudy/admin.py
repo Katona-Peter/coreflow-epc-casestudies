@@ -27,14 +27,22 @@ class CommentAdmin(admin.ModelAdmin):
     def approve_comments(self, request, queryset):
         """Bulk action to approve selected comments"""
         updated = queryset.update(approved=True)
-        self.message_user(request, f'{updated} comments were successfully approved.')
-    approve_comments.short_description = "Approve selected comments"
+        if updated == 1:
+            message = '1 comment was successfully approved and is now visible to users.'
+        else:
+            message = f'{updated} comments were successfully approved and are now visible to users.'
+        self.message_user(request, message, level='SUCCESS')
+    approve_comments.short_description = "✓ Approve selected comments"
     
     def disapprove_comments(self, request, queryset):
         """Bulk action to disapprove selected comments"""
         updated = queryset.update(approved=False)
-        self.message_user(request, f'{updated} comments were successfully disapproved.')
-    disapprove_comments.short_description = "Disapprove selected comments"
+        if updated == 1:
+            message = '1 comment was disapproved and is now hidden from public view.'
+        else:
+            message = f'{updated} comments were disapproved and are now hidden from public view.'
+        self.message_user(request, message, level='WARNING')
+    disapprove_comments.short_description = "✗ Disapprove selected comments"
 
 # Register your models here.
 admin.site.register(Client)

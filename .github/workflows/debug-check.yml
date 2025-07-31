@@ -1,0 +1,124 @@
+name: 🔒 Security Check - DEBUG Setting
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main, develop ]
+  workflow_dispatch:
+
+jobs:
+  debug-check:
+    name: 🔍 Check Django DEBUG Setting
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: 📥 Checkout code
+      uses: actions/checkout@v4
+      
+    - name: 🐍 Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.12'
+        
+    - name: 🔍 Check DEBUG setting in Django settings
+      run: |
+        echo "🔍 Scanning for Django settings files..."
+        
+        # Find all settings.py files (excluding virtual environments)
+        SETTINGS_FILES=$(find . -name "settings.py" -not -path "./.venv/*" -not -path "./venv/*" -not -path "./.git/*")
+        
+        if [ -z "$SETTINGS_FILES" ]; then
+          echo "ℹ️  No Django settings.py files found."
+          exit 0
+        fi
+        
+        echo "📄 Found settings files:"
+        for file in $SETTINGS_FILES; do
+          echo "   • $file"
+        done
+        echo ""
+        
+        # Check each settings file
+        DEBUG_FOUND=false
+        for SETTINGS_FILE in $SETTINGS_FILES; do
+          echo "🔍 Checking: $SETTINGS_FILE"
+          
+          # Check for DEBUG = True (with various whitespace patterns)
+          if grep -E "^\s*DEBUG\s*=\s*True" "$SETTINGS_FILE"; then
+            echo "❌ ERROR: DEBUG=True found in $SETTINGS_FILE"
+            echo "   Line: $(grep -n "DEBUG.*True" "$SETTINGS_FILE")"
+            DEBUG_FOUND=true
+          fi
+          
+          # Also check for DEBUG=1 or other truthy values
+          if grep -E "^\s*DEBUG\s*=\s*[1-9]" "$SETTINGS_FILE"; then
+            echo "❌ ERROR: DEBUG set to truthy value in $SETTINGS_FILE"
+            echo "   Line: $(grep -n "DEBUG.*[1-9]" "$SETTINGS_FILE")"
+            DEBUG_FOUND=true
+          fi
+          
+          if [ "$DEBUG_FOUND" = false ]; then
+            echo "   ✅ DEBUG=False (OK)"
+          fi
+        done
+        
+        if [ "$DEBUG_FOUND" = true ]; then
+          echo ""
+          echo "🚫 SECURITY VIOLATION DETECTED!"
+          echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+          echo "   DEBUG mode is enabled in Django settings."
+          echo "   This is a critical security risk and must be fixed before deployment."
+          echo ""
+          echo "🔧 Required fixes:"
+          echo "   1. Set DEBUG = False in all settings.py files"
+          echo "   2. Use environment variables for DEBUG control:"
+          echo "      DEBUG = os.environ.get('DEBUG', 'False').lower() == 'true'"
+          echo ""
+          echo "💡 For development environments:"
+          echo "   • Use local_settings.py (add to .gitignore)"
+          echo "   • Set DEBUG=True via environment variables locally"
+          echo "   • Use separate settings files for different environments"
+          echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+          exit 1
+        fi
+        
+        echo ""
+        echo "🎉 SECURITY CHECK PASSED!"
+        echo "✅ DEBUG=False in all Django settings files."
+        echo "🚀 Safe for production deployment."
+
+    - name: 🐍 Run Python DEBUG checker (if available)
+      run: |
+        if [ -f "scripts/check_debug.py" ]; then
+          echo "🐍 Running Python DEBUG checker..."
+          python scripts/check_debug.py --strict
+        else
+          echo "ℹ️  Python checker not found, skipping."
+        fi
+      continue-on-error: false
+
+    - name: 📊 Security Summary
+      if: success()
+      run: |
+        echo ""
+        echo "🛡️  SECURITY CHECK SUMMARY"
+        echo "═══════════════════════════════════════"
+        echo "✅ Django DEBUG setting verification: PASSED"
+        echo "✅ No DEBUG=True found in settings files"
+        echo "✅ Repository is safe for production deployment"
+        echo ""
+        echo "🔒 This workflow helps prevent accidental deployment"
+        echo "   of Django applications with DEBUG=True enabled."
+
+    - name: 🚨 Security Failure Notification
+      if: failure()
+      run: |
+        echo ""
+        echo "🚨 SECURITY CHECK FAILED!"
+        echo "═══════════════════════════════════════"
+        echo "❌ DEBUG=True detected in Django settings"
+        echo "❌ This is a critical security vulnerability"
+        echo "❌ Deployment blocked until resolved"
+        echo ""
+        echo "🛠️  Please fix the DEBUG setting and try again."

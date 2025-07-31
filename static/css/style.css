@@ -202,3 +202,112 @@ p.text-end.m-3 {
     background: #E84610;
 }
 
+/* ====== Enhanced Messages Styles ====== */
+.message-alert {
+    margin-top: 15px;
+    margin-bottom: 20px;
+    border-radius: 8px;
+    border: none;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    animation: slideInDown 0.5s ease-out;
+}
+
+.message-alert .fas {
+    font-size: 1.1em;
+}
+
+.message-alert strong {
+    font-weight: 600;
+}
+
+/* Success Message Styling */
+.alert-success {
+    background: linear-gradient(135deg, #d4edda 0%, #c3e6cb 100%);
+    border-left: 5px solid #28a745;
+    color: #155724;
+}
+
+.alert-success .fas {
+    color: #28a745;
+}
+
+/* Error Message Styling */
+.alert-danger {
+    background: linear-gradient(135deg, #f8d7da 0%, #f5c6cb 100%);
+    border-left: 5px solid #dc3545;
+    color: #721c24;
+}
+
+.alert-danger .fas {
+    color: #dc3545;
+}
+
+/* Warning Message Styling */
+.alert-warning {
+    background: linear-gradient(135deg, #fff3cd 0%, #ffeaa7 100%);
+    border-left: 5px solid #ffc107;
+    color: #856404;
+}
+
+.alert-warning .fas {
+    color: #ffc107;
+}
+
+/* Info Message Styling */
+.alert-info {
+    background: linear-gradient(135deg, #d1ecf1 0%, #bee5eb 100%);
+    border-left: 5px solid #17a2b8;
+    color: #0c5460;
+}
+
+.alert-info .fas {
+    color: #17a2b8;
+}
+
+/* Primary Message Styling */
+.alert-primary {
+    background: linear-gradient(135deg, #d6e9ff 0%, #cce7ff 100%);
+    border-left: 5px solid #0066cc;
+    color: #004085;
+}
+
+.alert-primary .fas {
+    color: #0066cc;
+}
+
+/* Message Animation */
+@keyframes slideInDown {
+    from {
+        transform: translate3d(0, -100%, 0);
+        opacity: 0;
+    }
+    to {
+        transform: translate3d(0, 0, 0);
+        opacity: 1;
+    }
+}
+
+/* Auto-hide messages after 5 seconds */
+.message-alert {
+    transition: opacity 0.5s ease-out;
+}
+
+/* Close button styling */
+.message-alert .btn-close {
+    font-size: 0.8rem;
+    opacity: 0.7;
+}
+
+.message-alert .btn-close:hover {
+    opacity: 1;
+}
+
+/* Responsive message styling */
+@media (max-width: 768px) {
+    .message-alert {
+        margin-left: 10px;
+        margin-right: 10px;
+        font-size: 0.9rem;
+    }
+}
+
