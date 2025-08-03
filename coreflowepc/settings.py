@@ -30,7 +30,8 @@ SECRET_KEY = os.environ.get('SECRET_KEY', 'django-insecure-53%vord**l36_fvz0^v@%
 DEBUG = False  # Set to True for development, False for production
 
 ALLOWED_HOSTS = ['.herokuapp.com',
-                 '127.0.0.1']
+                 '127.0.0.1',
+                 'localhost']
 
 # Application definition
 
@@ -150,11 +151,32 @@ STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static'), ]
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 # WhiteNoise configuration for serving static files with DEBUG=False
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedStaticFilesStorage'
+
+# Additional WhiteNoise settings for DEBUG=False compatibility
+WHITENOISE_USE_FINDERS = True
+WHITENOISE_AUTOREFRESH = True
 
 # WhiteNoise configuration for better static file handling
 WHITENOISE_USE_FINDERS = True
 WHITENOISE_AUTOREFRESH = True
+
+# Logging configuration to see errors when DEBUG=False
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'console': {
+            'class': 'logging.StreamHandler',
+        },
+    },
+    'loggers': {
+        'django': {
+            'handlers': ['console'],
+            'level': 'ERROR',
+        },
+    },
+}
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
