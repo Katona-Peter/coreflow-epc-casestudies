@@ -8,8 +8,8 @@ def casestudy_image_path(instance, filename):
     ext = filename.split('.')[-1]
     # Create filename using case study slug and original extension
     filename = f"{instance.slug}.{ext}"
-    # Return path: staticfiles/images/casestudies/slug.ext
-    return os.path.join('staticfiles', 'images', 'casestudies', filename)
+    # Return path: images/casestudies/slug.ext (will be saved to MEDIA_ROOT)
+    return os.path.join('images', 'casestudies', filename)
 
 class Client(models.Model):
     client = models.CharField(max_length=100, unique=True)
