@@ -1,15 +1,16 @@
 from django.db import models
 from django.contrib.auth.models import User
 import os
+from .storage import StaticImageStorage
 
 def casestudy_image_path(instance, filename):
-    """Generate upload path for case study images"""
+    """Generate upload path for case study images to static directory"""
     # Get file extension
     ext = filename.split('.')[-1]
     # Create filename using case study slug and original extension
     filename = f"{instance.slug}.{ext}"
-    # Return path: images/casestudies/slug.ext (will be saved to MEDIA_ROOT)
-    return os.path.join('images', 'casestudies', filename)
+    # Return path: static/images/casestudies/slug.ext (will be saved to STATIC_ROOT)
+    return os.path.join('static', 'images', 'casestudies', filename)
 
 class Client(models.Model):
     client = models.CharField(max_length=100, unique=True)
@@ -40,9 +41,10 @@ class Casestudy(models.Model):
     industry = models.ForeignKey(Industry, on_delete=models.CASCADE, related_name="industry_casestudy")
     casestudyimage = models.ImageField(
         upload_to=casestudy_image_path, 
+        storage=StaticImageStorage(),
         null=True, 
         blank=True,
-        help_text="Upload an image for this case study. Image will be saved with the case study slug as filename."
+        help_text="Upload an image for this case study. Image will be saved to static directory for Heroku compatibility."
     )
 
     def __str__(self):

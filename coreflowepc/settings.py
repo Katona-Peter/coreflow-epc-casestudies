@@ -61,7 +61,6 @@ CRISPY_TEMPLATE_PACK = "bootstrap5"
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
-    'coreflowepc.middleware.MediaFilesMiddleware',  # Custom media files middleware
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -150,28 +149,12 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static'), ]
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
-# Media files (User uploaded files)
-MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-
 # WhiteNoise configuration for serving static files with DEBUG=False
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
-# Allow WhiteNoise to serve media files in deployment
+# WhiteNoise configuration for better static file handling
 WHITENOISE_USE_FINDERS = True
 WHITENOISE_AUTOREFRESH = True
-
-# For Heroku deployment - use Cloudinary for media files in production
-# Uncomment and configure if using Cloudinary:
-# import cloudinary
-# import cloudinary.uploader
-# import cloudinary.api
-# 
-# cloudinary.config(
-#     cloud_name=os.environ.get('CLOUDINARY_CLOUD_NAME'),
-#     api_key=os.environ.get('CLOUDINARY_API_KEY'),
-#     api_secret=os.environ.get('CLOUDINARY_API_SECRET'),
-# )
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
