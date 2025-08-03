@@ -8,31 +8,39 @@
         <div class="col-12 mt-3 left">
             <div class="row">
                 {% for casestudy in casestudy_list %}
-                <div class="col-md-6 mb-4">
-                    <div class="card card-blue-margin">
-                        <div class="card-left">
-                            {% load static %}
-                            <img class="card-img-top" src="{% static 'images/default.png' %}" alt="placeholder image">
-                            
-                        </div>
-                        <div class="card-right">
-                            <div class="card-title-strip">
-                                <a href="{% url 'casestudy_detail' casestudy.slug %}" class="casestudy-link">                                                       
-                                    <h2>{{ casestudy.title }}</h2>
-                                </a>                               
-                            </div>   
-                            <p>{{ casestudy.excerpt }}</p>                         
-                            <ul>
-                                <li><strong><i class="fas fa-user"></i>  Client:</strong> {{ casestudy.client }}</li>
-                                <li><strong><i class="fas fa-map-marker-alt"></i>  Location:</strong> {{ casestudy.location }}</li>
-                                <li><strong><i class="fas fa-industry"></i>  Industry:</strong> {{ casestudy.industry }}</li>
-                            </ul>
+                <div class="col-md-6 mb-4 d-flex">
+                    {% load static %}
+                    {% if casestudy.casestudyimage %}
+                        <div class="card card-blue-margin h-100 w-100" style="background-image: url('{{ casestudy.casestudyimage.url }}'); background-size: cover; background-position: center; background-repeat: no-repeat;">
+                    {% else %}
+                        <div class="card card-blue-margin h-100 w-100" style="background-image: url('{% static 'images/default.png' %}'); background-size: cover; background-position: center; background-repeat: no-repeat;">
+                    {% endif %}
+                        <!-- Layout with solid background left side and white right side -->
+                        <div class="card-overlay" style="height: 100%; width: 100%; display: flex;">
+                            <div class="card-left" style="flex: 0 0 50%; max-width: 50%; display: flex; align-items: flex-start; justify-content: center; padding: 0; height: 100%; overflow: hidden; background: rgba(255, 255, 255, 0.95);">
+                                <!-- Visible image on left side -->
+                                {% if casestudy.casestudyimage %}
+                                    <img src="{{ casestudy.casestudyimage.url }}" alt="{{ casestudy.title }}" class="img-fluid" style="width: 100%; height: auto; display: block; margin: 0; border-radius: 8px 0 8px 0; box-shadow: 0 4px 8px rgba(0,0,0,0.2);">
+                                {% else %}
+                                    <img src="{% static 'images/default.png' %}" alt="Default Image" class="img-fluid" style="width: 100%; height: auto; display: block; margin: 0; border-radius: 8px 0 8px 0; box-shadow: 0 4px 8px rgba(0,0,0,0.2);">
+                                {% endif %}
+                            </div>
+                            <div class="card-right d-flex flex-column" style="flex: 0 0 50%; max-width: 50%; padding: 10px; display: flex; flex-direction: column; justify-content: center; height: 100%; background: rgba(255, 255, 255, 0.95);">
+                                <div class="card-title-strip">
+                                    <a href="{% url 'casestudy_detail' casestudy.slug %}" class="casestudy-link">                                                       
+                                        <h2>{{ casestudy.title }}</h2>
+                                    </a>                               
+                                </div>   
+                                <p class="flex-grow-1">{{ casestudy.excerpt }}</p>                         
+                                <ul class="mt-auto">
+                                    <li><strong><i class="fas fa-user"></i>  Client:</strong> {{ casestudy.client }}</li>
+                                    <li><strong><i class="fas fa-map-marker-alt"></i>  Location:</strong> {{ casestudy.location }}</li>
+                                    <li><strong><i class="fas fa-industry"></i>  Industry:</strong> {{ casestudy.industry }}</li>
+                                </ul>
+                            </div>
                         </div>
                     </div>
                 </div>
-                {% if forloop.counter|divisibleby:2 %}
-                    </div><div class="row">
-                {% endif %}
                 {% endfor %}
             </div>
         </div>

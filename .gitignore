@@ -30,6 +30,14 @@ db.sqlite3-journal
 .env.test
 .env.production
 
+# Temporary and test files
+test_*.py
+*_test.py
+setup_*.py
+create_test_*.py
+*.tmp
+*.temp
+
 # OS generated files
 .DS_Store
 .DS_Store?
@@ -38,3 +46,8 @@ db.sqlite3-journal
 .Trashes
 ehthumbs.db
 Thumbs.db
+
+# Virtual environment
+.venv/
+venv/
+env/

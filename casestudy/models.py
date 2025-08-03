@@ -1,5 +1,15 @@
 from django.db import models
 from django.contrib.auth.models import User
+import os
+
+def casestudy_image_path(instance, filename):
+    """Generate upload path for case study images"""
+    # Get file extension
+    ext = filename.split('.')[-1]
+    # Create filename using case study slug and original extension
+    filename = f"{instance.slug}.{ext}"
+    # Return path: staticfiles/images/casestudies/slug.ext
+    return os.path.join('staticfiles', 'images', 'casestudies', filename)
 
 class Client(models.Model):
     client = models.CharField(max_length=100, unique=True)
@@ -28,6 +38,12 @@ class Casestudy(models.Model):
     description = models.TextField()
     excerpt = models.TextField(null=True, blank=True)
     industry = models.ForeignKey(Industry, on_delete=models.CASCADE, related_name="industry_casestudy")
+    casestudyimage = models.ImageField(
+        upload_to=casestudy_image_path, 
+        null=True, 
+        blank=True,
+        help_text="Upload an image for this case study. Image will be saved with the case study slug as filename."
+    )
 
     def __str__(self):
         return self.title
