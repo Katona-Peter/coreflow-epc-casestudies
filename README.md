@@ -278,6 +278,42 @@ The Django admin interface provides:
 - `/casestudy/<slug>/`: Individual case study detail
 - `/admin/`: Django administration interface
 
+## Deployment
+
+### 🚀 **Live Application**
+- **Production URL**: [https://coreflow-epc-casestudies-faf59a0d5c41.herokuapp.com/](https://coreflow-epc-casestudies-faf59a0d5c41.herokuapp.com/)
+- **Platform**: Heroku
+- **Environment**: Django with WhiteNoise for static files
+
+### 📋 **Deployment Options**
+
+#### **Heroku Deployment (Recommended)**
+This Django application is designed for deployment on Heroku:
+
+```bash
+# Deploy to Heroku
+git push heroku main
+
+# Run migrations
+heroku run python manage.py migrate
+
+# Create superuser
+heroku run python manage.py createsuperuser
+```
+
+#### **GitHub Pages Note**
+⚠️ **Important**: This repository contains a Django web application that **cannot be deployed on GitHub Pages** as it requires a Python server environment. GitHub Pages only supports static HTML/CSS/JavaScript sites.
+
+- The `index.html` file in the root is provided for GitHub Pages compatibility only
+- It redirects visitors to the live Heroku deployment
+- For the actual application, visit the Heroku URL above
+
+### 🔧 **Deployment Configuration**
+- **DEBUG**: Set to `False` for production
+- **Static Files**: Managed by WhiteNoise
+- **Database**: PostgreSQL on Heroku
+- **Security**: Environment variables for sensitive data
+
 ## Contributing
 
 1. **Fork the repository**
