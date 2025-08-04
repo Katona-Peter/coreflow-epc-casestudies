@@ -33,10 +33,18 @@ db.sqlite3-journal
 # Temporary and test files
 test_*.py
 *_test.py
+debug_*.py
 setup_*.py
 create_test_*.py
+fix_*.py
+data_*.json
 *.tmp
 *.temp
+*.bak
+
+# Development and debugging files
+security-config.ini
+optimize_*.py
 
 # OS generated files
 .DS_Store

@@ -239,6 +239,18 @@ The Django admin interface provides:
 - **Comment Moderation**: Approve/reject user comments
 - **User Management**: Handle user accounts and permissions
 
+## 📚 Documentation
+
+Comprehensive documentation is available in the [`docs/`](docs/) folder:
+
+- **[Environment Setup Guide](docs/ENVIRONMENT_SETUP.md)** - Complete setup instructions
+- **[Deployment Guide](docs/HEROKU_DEPLOYMENT.md)** - Heroku deployment walkthrough  
+- **[Security Guidelines](docs/SECURITY_README.md)** - Security best practices
+- **[Media Management](docs/MEDIA_CLEANUP_SUMMARY.md)** - File upload and management
+- **[Comment System Guide](docs/CREATE_COMMENTS_INSTRUCTIONS.md)** - Comment implementation details
+
+For a complete documentation index, see [`docs/README.md`](docs/README.md).
+
 ## Deployment
 
 ### Heroku Deployment
