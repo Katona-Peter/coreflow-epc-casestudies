@@ -1,0 +1,70 @@
+/* Critical CSS - Above the fold styles for better performance */
+/* This should be inlined in the head for faster rendering */
+
+/* Core layout */
+body {
+    font-family: "Lato", sans-serif;
+    background-color: #F9FAFC;
+}
+
+.main-bg {
+    background-color: #F9FAFC;
+}
+
+/* Navigation */
+.navbar {
+    background-color: white !important;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.navbar-brand img {
+    height: 60px;
+    margin-right: 10px;
+}
+
+/* Cards */
+.card {
+    transition: transform 0.2s ease-in-out;
+    border: none;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+}
+
+.card-blue-margin {
+    border: 3px solid #007bff;
+    border-radius: 10px;
+}
+
+/* Performance optimizations */
+.img-fluid {
+    max-width: 100%;
+    height: auto;
+}
+
+/* Lazy loading placeholder */
+.lazy-placeholder {
+    background-color: #f8f9fa;
+    min-height: 200px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Optimize font loading */
+@font-face {
+    font-family: 'Lato';
+    font-style: normal;
+    font-weight: 300;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: 300;
+    font-display: swap;
+}

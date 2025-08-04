@@ -18,11 +18,21 @@
                         <!-- Layout with solid background left side and white right side -->
                         <div class="card-overlay" style="height: 100%; width: 100%; display: flex;">
                             <div class="card-left" style="flex: 0 0 50%; max-width: 50%; display: flex; align-items: flex-start; justify-content: center; padding: 0; height: 100%; overflow: hidden; background: rgba(255, 255, 255, 0.95);">
-                                <!-- Visible image on left side -->
+                                <!-- Optimized image with lazy loading -->
                                 {% if casestudy.casestudyimage %}
-                                    <img src="{% static casestudy.casestudyimage.name %}" alt="{{ casestudy.title }}" class="img-fluid" style="width: 100%; height: auto; display: block; margin: 0; border-radius: 8px 0 8px 0; box-shadow: 0 4px 8px rgba(0,0,0,0.2);">
+                                    <img src="{% static casestudy.casestudyimage.name %}" 
+                                         alt="{{ casestudy.title }}" 
+                                         class="img-fluid" 
+                                         style="width: 100%; height: auto; display: block; margin: 0; border-radius: 8px 0 8px 0; box-shadow: 0 4px 8px rgba(0,0,0,0.2);"
+                                         loading="lazy"
+                                         decoding="async">
                                 {% else %}
-                                    <img src="{% static 'images/default.png' %}" alt="Default Image" class="img-fluid" style="width: 100%; height: auto; display: block; margin: 0; border-radius: 8px 0 8px 0; box-shadow: 0 4px 8px rgba(0,0,0,0.2);">
+                                    <img src="{% static 'images/default.png' %}" 
+                                         alt="Default Image" 
+                                         class="img-fluid" 
+                                         style="width: 100%; height: auto; display: block; margin: 0; border-radius: 8px 0 8px 0; box-shadow: 0 4px 8px rgba(0,0,0,0.2);"
+                                         loading="lazy"
+                                         decoding="async">
                                 {% endif %}
                             </div>
                             <div class="card-right d-flex flex-column" style="flex: 0 0 50%; max-width: 50%; padding: 10px; display: flex; flex-direction: column; justify-content: center; height: 100%; background: rgba(255, 255, 255, 0.95);">
