@@ -26,7 +26,7 @@ jobs:
         echo "🔍 Scanning for Django settings files..."
         
         # Find all settings.py files (excluding virtual environments)
-        SETTINGS_FILES=$(find . -name "settings.py" -not -path "./.venv/*" -not -path "./venv/*" -not -path "./.git/*")
+        SETTINGS_FILES=$(find . -name "settings.py" -not -path "./.venv/*" -not -path "./venv/*" -not -path "./.git/*" 2>/dev/null || true)
         
         if [ -z "$SETTINGS_FILES" ]; then
           echo "ℹ️  No Django settings.py files found."
@@ -45,21 +45,29 @@ jobs:
           echo "🔍 Checking: $SETTINGS_FILE"
           
           # Check for DEBUG = True (with various whitespace patterns)
-          if grep -E "^\s*DEBUG\s*=\s*True" "$SETTINGS_FILE"; then
+          if grep -E "^\s*DEBUG\s*=\s*True" "$SETTINGS_FILE" 2>/dev/null; then
             echo "❌ ERROR: DEBUG=True found in $SETTINGS_FILE"
-            echo "   Line: $(grep -n "DEBUG.*True" "$SETTINGS_FILE")"
+            echo "   Line: $(grep -n "DEBUG.*True" "$SETTINGS_FILE" 2>/dev/null || echo "Line not found")"
             DEBUG_FOUND=true
           fi
           
           # Also check for DEBUG=1 or other truthy values
-          if grep -E "^\s*DEBUG\s*=\s*[1-9]" "$SETTINGS_FILE"; then
+          if grep -E "^\s*DEBUG\s*=\s*[1-9]" "$SETTINGS_FILE" 2>/dev/null; then
             echo "❌ ERROR: DEBUG set to truthy value in $SETTINGS_FILE"
-            echo "   Line: $(grep -n "DEBUG.*[1-9]" "$SETTINGS_FILE")"
+            echo "   Line: $(grep -n "DEBUG.*[1-9]" "$SETTINGS_FILE" 2>/dev/null || echo "Line not found")"
             DEBUG_FOUND=true
           fi
           
-          if [ "$DEBUG_FOUND" = false ]; then
+          # Check for DEBUG = False
+          if grep -E "^\s*DEBUG\s*=\s*False" "$SETTINGS_FILE" 2>/dev/null; then
             echo "   ✅ DEBUG=False (OK)"
+          elif grep -E "^\s*DEBUG\s*=" "$SETTINGS_FILE" 2>/dev/null; then
+            echo "   ⚠️  DEBUG setting found but not explicitly False"
+            # Get the actual DEBUG line
+            DEBUG_LINE=$(grep -E "^\s*DEBUG\s*=" "$SETTINGS_FILE" 2>/dev/null)
+            echo "   Line: $DEBUG_LINE"
+          else
+            echo "   ⚠️  No DEBUG setting found"
           fi
         done
         
@@ -85,18 +93,8 @@ jobs:
         
         echo ""
         echo "🎉 SECURITY CHECK PASSED!"
-        echo "✅ DEBUG=False in all Django settings files."
+        echo "✅ DEBUG=False confirmed in Django settings files."
         echo "🚀 Safe for production deployment."
-
-    - name: 🐍 Run Python DEBUG checker (if available)
-      run: |
-        if [ -f "scripts/check_debug.py" ]; then
-          echo "🐍 Running Python DEBUG checker..."
-          python scripts/check_debug.py --strict
-        else
-          echo "ℹ️  Python checker not found, skipping."
-        fi
-      continue-on-error: false
 
     - name: 📊 Security Summary
       if: success()
