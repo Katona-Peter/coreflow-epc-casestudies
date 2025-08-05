@@ -36,7 +36,7 @@
                 <div class="col-md-6 mb-4 d-flex">
                     {% load static %}
                     {% if casestudy.casestudyimage %}
-                        <div class="card card-blue-margin h-100 w-100" style="background-image: url('{% static 'images/' %}{{ casestudy.casestudyimage }}'); background-size: cover; background-position: center; background-repeat: no-repeat;">
+                        <div class="card card-blue-margin h-100 w-100" style="background-image: url('/static/images/{{ casestudy.casestudyimage }}'); background-size: cover; background-position: center; background-repeat: no-repeat;">
                     {% else %}
                         <div class="card card-blue-margin h-100 w-100" style="background-image: url('{% static 'images/default.png' %}'); background-size: cover; background-position: center; background-repeat: no-repeat;">
                     {% endif %}
@@ -45,7 +45,7 @@
                             <div class="card-left" style="flex: 0 0 50%; max-width: 50%; display: flex; align-items: flex-start; justify-content: center; padding: 0; height: 100%; overflow: hidden; background: rgba(255, 255, 255, 0.95);">
                                 <!-- Optimized image with lazy loading, performance hints, and hover effect -->
                                 {% if casestudy.casestudyimage and casestudy.casestudyimage != 'default.png' %}
-                                    <img src="{% static 'images/' %}{{ casestudy.casestudyimage }}" 
+                                    <img src="/static/images/{{ casestudy.casestudyimage }}" 
                                          alt="{{ casestudy.title }} case study image" 
                                          class="img-fluid case-study-image" 
                                          style="width: 100%; height: auto; display: block; margin: 0; border-radius: 8px 0 8px 0; box-shadow: 0 4px 8px rgba(0,0,0,0.2);"

@@ -20,7 +20,7 @@
                         <!-- Image Column (30% width) -->
                         <div class="col-lg-4 col-md-5 mb-3">
                             {% if casestudy.casestudyimage %}
-                                <img class="img-fluid w-100" src="{% static 'images/' %}{{ casestudy.casestudyimage }}" alt="{{ casestudy.title }}" style="border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+                                <img class="img-fluid w-100" src="/static/images/{{ casestudy.casestudyimage }}" alt="{{ casestudy.title }}" style="border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
                             {% else %}
                                 <img class="img-fluid w-100" src="{% static 'images/default.png' %}" alt="Default case study image" style="border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
                             {% endif %}
