@@ -139,6 +139,8 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 if ON_HEROKU:
     # Heroku production settings
     STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+    # Add additional staticfiles directories for Heroku
+    STATICFILES_DIRS = []
 else:
     # Development settings
     STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')] if os.path.exists(os.path.join(BASE_DIR, 'static')) else []
@@ -153,6 +155,26 @@ WHITENOISE_USE_FINDERS = True
 WHITENOISE_AUTOREFRESH = True
 # Important: Allow WhiteNoise to serve all file types including images
 WHITENOISE_SKIP_COMPRESS_EXTENSIONS = ['jpg', 'jpeg', 'png', 'gif', 'webp', 'svg', 'ico', 'woff', 'woff2']
+# Additional MIME types for images
+WHITENOISE_MIMETYPES = {
+    '.jpg': 'image/jpeg',
+    '.jpeg': 'image/jpeg', 
+    '.png': 'image/png',
+    '.gif': 'image/gif',
+    '.svg': 'image/svg+xml',
+    '.webp': 'image/webp',
+    '.ico': 'image/x-icon',
+}
+# Add media files to WhiteNoise on Heroku
+if ON_HEROKU:
+    # Configure WhiteNoise to serve uploaded files from static directory
+    WHITENOISE_ROOT = os.path.join(STATIC_ROOT, 'uploads')
+    WHITENOISE_INDEX_FILE = True
+    # Ensure static files include uploaded content
+    STATICFILES_DIRS.append(os.path.join(BASE_DIR, 'static', 'uploads'))
+    # Force HTTPS for static files on Heroku
+    SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+    SECURE_SSL_REDIRECT = False  # Let Heroku handle SSL redirect
 
 # Default primary key field type
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
