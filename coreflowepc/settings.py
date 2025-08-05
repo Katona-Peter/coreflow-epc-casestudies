@@ -150,9 +150,8 @@ else:
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
-# WhiteNoise configuration for serving media files on Heroku
+# WhiteNoise configuration for serving files on Heroku
 WHITENOISE_USE_FINDERS = True
-WHITENOISE_AUTOREFRESH = True
 # Important: Allow WhiteNoise to serve all file types including images
 WHITENOISE_SKIP_COMPRESS_EXTENSIONS = ['jpg', 'jpeg', 'png', 'gif', 'webp', 'svg', 'ico', 'woff', 'woff2']
 # Additional MIME types for images
@@ -165,11 +164,8 @@ WHITENOISE_MIMETYPES = {
     '.webp': 'image/webp',
     '.ico': 'image/x-icon',
 }
-# Add media files to WhiteNoise on Heroku
+# Heroku-specific settings
 if ON_HEROKU:
-    # Configure WhiteNoise to serve uploaded files from static directory
-    WHITENOISE_ROOT = os.path.join(STATIC_ROOT, 'uploads')
-    WHITENOISE_INDEX_FILE = True
     # Force HTTPS for static files on Heroku
     SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
     SECURE_SSL_REDIRECT = False  # Let Heroku handle SSL redirect
