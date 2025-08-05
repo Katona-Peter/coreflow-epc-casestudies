@@ -1,6 +1,6 @@
 """
 Django settings for coreflowepc project.
-Optimized for Heroku deployment with proper error handling.
+Simplified and bulletproof configuration for Heroku deployment.
 """
 
 from pathlib import Path
@@ -17,28 +17,21 @@ except ImportError:
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.environ.get('SECRET_KEY', 'django-insecure-development-key-change-in-production')
-
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.environ.get('DEBUG', 'False').lower() == 'true'
-
 # Detect if running on Heroku
 ON_HEROKU = 'DYNO' in os.environ
 
-# Generate secure SECRET_KEY if not provided on Heroku
-if ON_HEROKU and not os.environ.get('SECRET_KEY'):
-    import secrets
-    import string
-    alphabet = string.ascii_letters + string.digits + '!@#$%^&*(-_=+)'
-    SECRET_KEY = ''.join(secrets.choice(alphabet) for i in range(50))
-    print(f"🔑 Generated SECRET_KEY for Heroku deployment")
+# SECURITY WARNING: keep the secret key used in production secret!
+SECRET_KEY = os.environ.get('SECRET_KEY')
+if not SECRET_KEY:
+    if ON_HEROKU:
+        # Fallback SECRET_KEY for Heroku if not set
+        SECRET_KEY = 'django-heroku-fallback-key-please-set-secret-key-in-config-vars'
+    else:
+        # Development key
+        SECRET_KEY = 'django-insecure-development-key-change-in-production'
 
-# Debug info for Heroku
-if ON_HEROKU:
-    print(f"🚀 Running on Heroku, DEBUG={DEBUG}")
-    print(f"🔧 SECRET_KEY configured: {'Yes' if os.environ.get('SECRET_KEY') else 'Generated'}")
-    print(f"🗄️  DATABASE_URL configured: {'Yes' if os.environ.get('DATABASE_URL') else 'No'}")
+# SECURITY WARNING: don't run with debug turned on in production!
+DEBUG = os.environ.get('DEBUG', 'False').lower() == 'true'
 
 ALLOWED_HOSTS = ['*'] if DEBUG else ['.herokuapp.com', '127.0.0.1', 'localhost']
 
@@ -98,11 +91,9 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'coreflowepc.wsgi.application'
 
-# Database configuration
-# Simple and robust database configuration for Heroku
+# Database configuration - Simplified and bulletproof
 if ON_HEROKU:
     # Production database from Heroku DATABASE_URL
-    import dj_database_url
     DATABASES = {
         'default': dj_database_url.config(
             default='sqlite:///db.sqlite3',
@@ -111,7 +102,7 @@ if ON_HEROKU:
         )
     }
 else:
-    # Development database
+    # Development database - simple SQLite
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.sqlite3',
@@ -133,15 +124,15 @@ TIME_ZONE = 'UTC'
 USE_I18N = True
 USE_TZ = True
 
-# Static files (CSS, JavaScript, Images)
+# Static files (CSS, JavaScript, Images) - Simplified for Heroku
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
+# Environment-specific static file configuration
 if ON_HEROKU:
     # Heroku production settings
     STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
-    # Include uploads directory in static files for Heroku
-    STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static', 'uploads')] if os.path.exists(os.path.join(BASE_DIR, 'static', 'uploads')) else []
+    STATICFILES_DIRS = []
 else:
     # Development settings
     STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')] if os.path.exists(os.path.join(BASE_DIR, 'static')) else []
@@ -151,14 +142,10 @@ else:
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
-# WhiteNoise configuration for serving files on Heroku
+# WhiteNoise configuration - minimal and safe
 if ON_HEROKU:
     WHITENOISE_USE_FINDERS = True
-    # Important: Allow WhiteNoise to serve all file types including images
-    WHITENOISE_SKIP_COMPRESS_EXTENSIONS = ['jpg', 'jpeg', 'png', 'gif', 'webp', 'svg', 'ico', 'woff', 'woff2']
-    # Force HTTPS for static files on Heroku
-    SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
-    SECURE_SSL_REDIRECT = False  # Let Heroku handle SSL redirect
+    WHITENOISE_SKIP_COMPRESS_EXTENSIONS = ['jpg', 'jpeg', 'png', 'gif', 'webp', 'svg', 'ico']
 
 # Default primary key field type
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
@@ -201,10 +188,6 @@ LOGGING = {
         },
     },
 }
-
-# Force DEBUG mode for better error reporting temporarily
-if ON_HEROKU:
-    DEBUG = False  # Restore proper production setting
 
 # Email configuration
 if DEBUG:
