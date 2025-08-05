@@ -32,6 +32,13 @@ if ON_HEROKU and not os.environ.get('SECRET_KEY'):
     import string
     alphabet = string.ascii_letters + string.digits + '!@#$%^&*(-_=+)'
     SECRET_KEY = ''.join(secrets.choice(alphabet) for i in range(50))
+    print(f"🔑 Generated SECRET_KEY for Heroku deployment")
+
+# Debug info for Heroku
+if ON_HEROKU:
+    print(f"🚀 Running on Heroku, DEBUG={DEBUG}")
+    print(f"🔧 SECRET_KEY configured: {'Yes' if os.environ.get('SECRET_KEY') else 'Generated'}")
+    print(f"🗄️  DATABASE_URL configured: {'Yes' if os.environ.get('DATABASE_URL') else 'No'}")
 
 ALLOWED_HOSTS = ['*'] if DEBUG else ['.herokuapp.com', '127.0.0.1', 'localhost']
 
@@ -135,7 +142,12 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 # WhiteNoise configuration
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+if ON_HEROKU:
+    # Use simplified storage for Heroku to avoid manifest issues
+    STATICFILES_STORAGE = 'whitenoise.storage.CompressedStaticFilesStorage'
+else:
+    STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
 WHITENOISE_USE_FINDERS = True
 
 # Default primary key field type
@@ -145,15 +157,37 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
+    'formatters': {
+        'verbose': {
+            'format': '{levelname} {asctime} {module} {process:d} {thread:d} {message}',
+            'style': '{',
+        },
+    },
     'handlers': {
         'console': {
             'class': 'logging.StreamHandler',
+            'formatter': 'verbose',
         },
+    },
+    'root': {
+        'handlers': ['console'],
+        'level': 'INFO',
     },
     'loggers': {
         'django': {
             'handlers': ['console'],
+            'level': 'INFO',
+            'propagate': False,
+        },
+        'django.request': {
+            'handlers': ['console'],
             'level': 'ERROR',
+            'propagate': False,
+        },
+        'django.server': {
+            'handlers': ['console'],
+            'level': 'INFO',
+            'propagate': False,
         },
     },
 }
@@ -161,8 +195,18 @@ LOGGING = {
 # Email configuration
 if DEBUG:
     EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+else:
+    # Use console backend in production if no email settings provided
+    EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 ACCOUNT_EMAIL_VERIFICATION = 'none'
+
+# Additional allauth settings for production
+ACCOUNT_AUTHENTICATION_METHOD = 'username_email'
+ACCOUNT_EMAIL_REQUIRED = False
+ACCOUNT_USERNAME_REQUIRED = True
+ACCOUNT_SIGNUP_EMAIL_ENTER_TWICE = False
+ACCOUNT_USERNAME_MIN_LENGTH = 4
 
 # Security settings for production
 if not DEBUG:

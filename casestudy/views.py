@@ -1,11 +1,29 @@
 from django.shortcuts import render, get_object_or_404, reverse
 from django.views import generic
 from django.contrib import messages
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, HttpResponse
 from django.views.decorators.cache import cache_page
 from django.utils.decorators import method_decorator
 from .models import Casestudy, Comment
 from .forms import CommentForm
+
+
+def health_check(request):
+    """Simple health check view for debugging Heroku deployment."""
+    import os
+    from django.conf import settings
+    
+    info = {
+        'status': 'OK',
+        'debug': settings.DEBUG,
+        'on_heroku': 'DYNO' in os.environ,
+        'database_engine': settings.DATABASES['default']['ENGINE'],
+        'static_url': settings.STATIC_URL,
+        'installed_apps_count': len(settings.INSTALLED_APPS),
+    }
+    
+    response_text = '\n'.join([f'{k}: {v}' for k, v in info.items()])
+    return HttpResponse(f"HEALTH CHECK\n\n{response_text}", content_type='text/plain')
 
 
 @method_decorator(cache_page(60 * 5), name='dispatch')  # Cache for 5 minutes
