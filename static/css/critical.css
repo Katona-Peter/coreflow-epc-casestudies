@@ -1,36 +1,44 @@
 /* Critical CSS - Above the fold styles for better performance */
 /* This should be inlined in the head for faster rendering */
 
-/* Core layout */
+/* Core layout with optimized rendering */
 body {
     font-family: "Lato", sans-serif;
     background-color: #F9FAFC;
+    font-display: swap;
+    will-change: transform;
 }
 
 .main-bg {
     background-color: #F9FAFC;
+    contain: layout style paint;
 }
 
-/* Navigation */
+/* Navigation with hardware acceleration */
 .navbar {
     background-color: white !important;
     box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    transform: translateZ(0);
+    backface-visibility: hidden;
 }
 
 .navbar-brand img {
     height: 60px;
     margin-right: 10px;
+    will-change: transform;
 }
 
-/* Cards */
+/* Cards with optimized rendering */
 .card {
     transition: transform 0.2s ease-in-out;
     border: none;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    contain: layout style paint;
+    transform: translateZ(0);
 }
 
 .card:hover {
-    transform: translateY(-2px);
+    transform: translateY(-2px) translateZ(0);
     box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
 }
 
@@ -39,27 +47,37 @@ body {
     border-radius: 10px;
 }
 
-/* Performance optimizations */
+/* Performance optimized images */
 .img-fluid {
     max-width: 100%;
     height: auto;
+    will-change: transform;
+    transform: translateZ(0);
 }
 
-/* Lazy loading placeholder */
+/* Skeleton loading animation */
 .lazy-placeholder {
-    background-color: #f8f9fa;
+    background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+    background-size: 200% 100%;
+    animation: skeleton-loading 1.5s infinite;
     min-height: 200px;
     display: flex;
     align-items: center;
     justify-content: center;
 }
 
-/* Optimize font loading */
+@keyframes skeleton-loading {
+    0% { background-position: 200% 0; }
+    100% { background-position: -200% 0; }
+}
+
+/* Optimize font loading with swap */
 @font-face {
     font-family: 'Lato';
     font-style: normal;
     font-weight: 300;
     font-display: swap;
+    src: local('Lato Light'), local('Lato-Light');
 }
 
 @font-face {
@@ -67,4 +85,11 @@ body {
     font-style: normal;
     font-weight: 300;
     font-display: swap;
+    src: local('Roboto Light'), local('Roboto-Light');
+}
+
+/* Performance hints */
+.perf-hint {
+    contain: strict;
+    will-change: auto;
 }

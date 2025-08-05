@@ -24,14 +24,18 @@ TEMPLATES_DIR = os.path.join(BASE_DIR, 'templates')
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.environ.get('SECRET_KEY', 'django-insecure-53%vord**l36_fvz0^v@%%*=2%+x^-@fxxj=ox9)pi939c-n%(')
+SECRET_KEY = os.environ.get('SECRET_KEY')
+
+if not SECRET_KEY:
+    raise ValueError("SECRET_KEY environment variable is required")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False  # Set to True for development, False for production
+DEBUG = os.environ.get('DEBUG', 'False').lower() == 'true'
 
 ALLOWED_HOSTS = ['.herokuapp.com',
                  '127.0.0.1',
-                 'localhost']
+                 'localhost',
+                 'testserver']  # Added for testing
 
 # Application definition
 
@@ -77,7 +81,7 @@ TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [TEMPLATES_DIR],
-        'APP_DIRS': True,
+        'APP_DIRS': True,  # Set back to True for simplicity
         'OPTIONS': {
             'context_processors': [
                 'django.template.context_processors.debug',
@@ -172,10 +176,35 @@ CACHES = {
 # Session and security optimizations
 SESSION_COOKIE_AGE = 1800  # 30 minutes
 SESSION_SAVE_EVERY_REQUEST = False
+SESSION_COOKIE_HTTPONLY = True
+SESSION_COOKIE_SECURE = not DEBUG
 
-# WhiteNoise configuration for better static file handling
+# Database optimizations
+if not DEBUG:
+    DATABASES['default']['CONN_MAX_AGE'] = 600  # Connection pooling
+
+# Static file compression and optimization
 WHITENOISE_USE_FINDERS = True
 WHITENOISE_AUTOREFRESH = True
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
+# Performance middleware order optimization
+MIDDLEWARE = [
+    'django.middleware.cache.UpdateCacheMiddleware',
+    'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
+    'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.middleware.common.CommonMiddleware',
+    'django.middleware.csrf.CsrfViewMiddleware',
+    'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'django.contrib.messages.middleware.MessageMiddleware',
+    'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'allauth.account.middleware.AccountMiddleware',
+    'django.middleware.cache.FetchFromCacheMiddleware',
+]
+
+# Template performance optimization - simplified approach
+# Note: Advanced template caching can be enabled in production
 
 # Logging configuration to see errors when DEBUG=False
 LOGGING = {

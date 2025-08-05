@@ -2,10 +2,13 @@ from django.shortcuts import render, get_object_or_404, reverse
 from django.views import generic
 from django.contrib import messages
 from django.http import HttpResponseRedirect
+from django.views.decorators.cache import cache_page
+from django.utils.decorators import method_decorator
 from .models import Casestudy, Comment
 from .forms import CommentForm
 
 
+@method_decorator(cache_page(60 * 5), name='dispatch')  # Cache for 5 minutes
 class CasestudyList(generic.ListView):
     queryset = Casestudy.objects.select_related(
         'client', 'location', 'industry'
@@ -20,6 +23,7 @@ class CasestudyDetail(generic.DetailView):
     template_name = "casestudy/casestudy_detail.html"
 
 
+@cache_page(60 * 10)  # Cache detail pages for 10 minutes
 def casestudy_detail(request, slug):
     """
     Display an individual case study with comments and comment form.
