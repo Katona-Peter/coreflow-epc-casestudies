@@ -1,17 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
 import os
-from .storage import StaticImageStorage
-
-
-def casestudy_image_path(instance, filename):
-    """Generate upload path for case study images to static directory."""
-    # Get file extension
-    ext = filename.split('.')[-1]
-    # Create filename using case study slug and original extension
-    filename = f"{instance.slug}.{ext}"
-    # Return path: static/images/casestudies/slug.ext (saved to STATIC_ROOT)
-    return os.path.join('static', 'images', 'casestudies', filename)
 
 
 class Client(models.Model):
@@ -49,13 +38,12 @@ class Casestudy(models.Model):
     industry = models.ForeignKey(
         Industry, on_delete=models.CASCADE, related_name="industry_casestudy"
     )
-    casestudyimage = models.ImageField(
-        upload_to=casestudy_image_path,
-        storage=StaticImageStorage(),
+    # Simple CharField for static image filename
+    casestudyimage = models.CharField(
+        max_length=200,
         null=True,
         blank=True,
-        help_text="Upload an image for this case study. Image will be saved "
-                  "to static directory for Heroku compatibility."
+        help_text="Filename of the image in static/images/ directory (e.g., 'floating-roof.png')"
     )
 
     class Meta:
@@ -64,6 +52,12 @@ class Casestudy(models.Model):
 
     def __str__(self):
         return self.title
+    
+    def get_image_url(self):
+        """Return the static URL for the case study image."""
+        if self.casestudyimage:
+            return f"/static/images/{self.casestudyimage}"
+        return "/static/images/default.png"
 
 
 class Comment(models.Model):
