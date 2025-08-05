@@ -1,6 +1,13 @@
 from django.contrib import admin
 from .models import Client, Location, Industry, Casestudy, Comment
-from django_summernote.admin import SummernoteModelAdmin
+
+# Try to import SummernoteModelAdmin, fallback to regular ModelAdmin if not available
+try:
+    from django_summernote.admin import SummernoteModelAdmin
+    SUMMERNOTE_AVAILABLE = True
+except ImportError:
+    SUMMERNOTE_AVAILABLE = False
+    SummernoteModelAdmin = admin.ModelAdmin
 
 @admin.register(Casestudy)
 class CasestudyAdmin(SummernoteModelAdmin):
@@ -9,7 +16,11 @@ class CasestudyAdmin(SummernoteModelAdmin):
     search_fields = ['title']
     #list_filter = ('status',)
     prepopulated_fields = {'slug': ('title',)}
-    summernote_fields = ('description',)
+    
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        if SUMMERNOTE_AVAILABLE:
+            self.summernote_fields = ('description',)
 
 @admin.register(Comment)
 class CommentAdmin(admin.ModelAdmin):
