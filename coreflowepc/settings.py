@@ -139,8 +139,8 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 if ON_HEROKU:
     # Heroku production settings
     STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
-    # Add additional staticfiles directories for Heroku
-    STATICFILES_DIRS = []
+    # Include uploads directory in static files for Heroku
+    STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static', 'uploads')] if os.path.exists(os.path.join(BASE_DIR, 'static', 'uploads')) else []
 else:
     # Development settings
     STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')] if os.path.exists(os.path.join(BASE_DIR, 'static')) else []
@@ -170,8 +170,6 @@ if ON_HEROKU:
     # Configure WhiteNoise to serve uploaded files from static directory
     WHITENOISE_ROOT = os.path.join(STATIC_ROOT, 'uploads')
     WHITENOISE_INDEX_FILE = True
-    # Ensure static files include uploaded content
-    STATICFILES_DIRS.append(os.path.join(BASE_DIR, 'static', 'uploads'))
     # Force HTTPS for static files on Heroku
     SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
     SECURE_SSL_REDIRECT = False  # Let Heroku handle SSL redirect
