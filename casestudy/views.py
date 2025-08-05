@@ -12,7 +12,7 @@ from .forms import CommentForm
 class CasestudyList(generic.ListView):
     queryset = Casestudy.objects.all().order_by("title")
     template_name = "casestudy/index.html"
-    paginate_by = 6
+    paginate_by = 4
     context_object_name = "casestudy_list"
 
 

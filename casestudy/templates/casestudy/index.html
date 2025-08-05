@@ -44,7 +44,7 @@
                         <div class="card-overlay" style="height: 100%; width: 100%; display: flex;">
                             <div class="card-left" style="flex: 0 0 50%; max-width: 50%; display: flex; align-items: flex-start; justify-content: center; padding: 0; height: 100%; overflow: hidden; background: rgba(255, 255, 255, 0.95);">
                                 <!-- Optimized image with lazy loading, performance hints, and hover effect -->
-                                {% if casestudy.casestudyimage %}
+                                {% if casestudy.casestudyimage and casestudy.casestudyimage != 'default.png' %}
                                     <img src="{% static 'images/' %}{{ casestudy.casestudyimage }}" 
                                          alt="{{ casestudy.title }} case study image" 
                                          class="img-fluid case-study-image" 
