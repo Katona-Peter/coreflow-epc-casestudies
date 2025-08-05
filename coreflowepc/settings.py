@@ -24,18 +24,29 @@ TEMPLATES_DIR = os.path.join(BASE_DIR, 'templates')
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.environ.get('SECRET_KEY')
-
-if not SECRET_KEY:
-    raise ValueError("SECRET_KEY environment variable is required")
+SECRET_KEY = os.environ.get('SECRET_KEY', 'django-insecure-development-key-change-in-production')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ.get('DEBUG', 'False').lower() == 'true'
 
-ALLOWED_HOSTS = ['.herokuapp.com',
-                 '127.0.0.1',
-                 'localhost',
-                 'testserver']  # Added for testing
+# Only require SECRET_KEY in production
+if not DEBUG and SECRET_KEY.startswith('django-insecure-'):
+    raise ValueError("A secure SECRET_KEY environment variable is required in production")
+
+# Production security settings
+if not DEBUG:
+    SECURE_BROWSER_XSS_FILTER = True
+    SECURE_CONTENT_TYPE_NOSNIFF = True
+    X_FRAME_OPTIONS = 'DENY'
+    SECURE_HSTS_SECONDS = 31536000
+    SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+    SECURE_HSTS_PRELOAD = True
+
+ALLOWED_HOSTS = ['*'] if DEBUG else [
+    '.herokuapp.com',
+    '127.0.0.1',
+    'localhost',
+]
 
 # Application definition
 
@@ -107,7 +118,7 @@ WSGI_APPLICATION = 'coreflowepc.wsgi.application'
 #}
 
 DATABASES = {
-    'default': dj_database_url.parse(os.environ.get("DATABASE_URL"))
+    'default': dj_database_url.parse(os.environ.get("DATABASE_URL", "sqlite:///db.sqlite3"))
 }
 
 CSRF_TRUSTED_ORIGINS = [
@@ -154,12 +165,10 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static'), ]
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
-# WhiteNoise configuration for serving static files with DEBUG=False
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedStaticFilesStorage'
-
-# Additional WhiteNoise settings for DEBUG=False compatibility
+# WhiteNoise configuration for serving static files
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 WHITENOISE_USE_FINDERS = True
-WHITENOISE_AUTOREFRESH = True
+WHITENOISE_AUTOREFRESH = DEBUG  # Only in development
 
 # Performance optimizations
 CACHES = {
@@ -182,11 +191,6 @@ SESSION_COOKIE_SECURE = not DEBUG
 # Database optimizations
 if not DEBUG:
     DATABASES['default']['CONN_MAX_AGE'] = 600  # Connection pooling
-
-# Static file compression and optimization
-WHITENOISE_USE_FINDERS = True
-WHITENOISE_AUTOREFRESH = True
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 # Performance middleware order optimization
 MIDDLEWARE = [
