@@ -12,7 +12,7 @@ from .forms import CommentForm
 class CasestudyList(generic.ListView):
     queryset = Casestudy.objects.select_related(
         'client', 'location', 'industry'
-    ).all()
+    ).all().order_by('title')  # Explicit ordering for pagination
     template_name = "casestudy/index.html"
     context_object_name = "casestudy_list"
     paginate_by = 4

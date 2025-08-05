@@ -58,6 +58,10 @@ class Casestudy(models.Model):
                   "to static directory for Heroku compatibility."
     )
 
+    class Meta:
+        ordering = ['title']  # Order by title alphabetically
+        verbose_name_plural = "Case Studies"
+
     def __str__(self):
         return self.title
 
