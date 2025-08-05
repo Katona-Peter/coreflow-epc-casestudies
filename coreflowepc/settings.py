@@ -99,18 +99,19 @@ TEMPLATES = [
 WSGI_APPLICATION = 'coreflowepc.wsgi.application'
 
 # Database configuration
-DATABASE_URL = os.environ.get("DATABASE_URL", "sqlite:///db.sqlite3")
-
-try:
-    database_config = dj_database_url.parse(DATABASE_URL, conn_max_age=600)
-    DATABASES = {'default': database_config}
-    
-    # Fix for Heroku Postgres SSL requirement
-    if 'DATABASE_URL' in os.environ:
-        DATABASES['default']['OPTIONS'] = {'sslmode': 'require'}
-        
-except Exception as e:
-    # Fallback to SQLite if database URL parsing fails
+# Simple and robust database configuration for Heroku
+if ON_HEROKU:
+    # Production database from Heroku DATABASE_URL
+    import dj_database_url
+    DATABASES = {
+        'default': dj_database_url.config(
+            default='sqlite:///db.sqlite3',
+            conn_max_age=600,
+            ssl_require=True
+        )
+    }
+else:
+    # Development database
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.sqlite3',
@@ -151,21 +152,10 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 # WhiteNoise configuration for serving files on Heroku
-WHITENOISE_USE_FINDERS = True
-# Important: Allow WhiteNoise to serve all file types including images
-WHITENOISE_SKIP_COMPRESS_EXTENSIONS = ['jpg', 'jpeg', 'png', 'gif', 'webp', 'svg', 'ico', 'woff', 'woff2']
-# Additional MIME types for images
-WHITENOISE_MIMETYPES = {
-    '.jpg': 'image/jpeg',
-    '.jpeg': 'image/jpeg', 
-    '.png': 'image/png',
-    '.gif': 'image/gif',
-    '.svg': 'image/svg+xml',
-    '.webp': 'image/webp',
-    '.ico': 'image/x-icon',
-}
-# Heroku-specific settings
 if ON_HEROKU:
+    WHITENOISE_USE_FINDERS = True
+    # Important: Allow WhiteNoise to serve all file types including images
+    WHITENOISE_SKIP_COMPRESS_EXTENSIONS = ['jpg', 'jpeg', 'png', 'gif', 'webp', 'svg', 'ico', 'woff', 'woff2']
     # Force HTTPS for static files on Heroku
     SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
     SECURE_SSL_REDIRECT = False  # Let Heroku handle SSL redirect
@@ -215,7 +205,6 @@ LOGGING = {
 # Force DEBUG mode for better error reporting temporarily
 if ON_HEROKU:
     DEBUG = False  # Restore proper production setting
-    ALLOWED_HOSTS = ['.herokuapp.com', '127.0.0.1', 'localhost']
 
 # Email configuration
 if DEBUG:
