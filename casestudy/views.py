@@ -1,66 +1,19 @@
 from django.shortcuts import render, get_object_or_404, reverse
 from django.views import generic
 from django.contrib import messages
-from django.http import HttpResponseRedirect, HttpResponse
+from django.http import HttpResponseRedirect
 from django.views.decorators.cache import cache_page
 from django.utils.decorators import method_decorator
 from .models import Casestudy, Comment
 from .forms import CommentForm
 
 
-def health_check(request):
-    """Simple health check view for debugging Heroku deployment."""
-    import os
-    from django.conf import settings
-    
-    try:
-        # Test database connection
-        from django.db import connection
-        cursor = connection.cursor()
-        cursor.execute("SELECT 1")
-        db_status = "OK"
-    except Exception as e:
-        db_status = f"ERROR: {str(e)}"
-    
-    info = {
-        'status': 'OK',
-        'debug': settings.DEBUG,
-        'on_heroku': 'DYNO' in os.environ,
-        'database_engine': settings.DATABASES['default']['ENGINE'],
-        'database_status': db_status,
-        'static_url': settings.STATIC_URL,
-        'static_root': settings.STATIC_ROOT,
-        'installed_apps_count': len(settings.INSTALLED_APPS),
-        'secret_key_set': bool(os.environ.get('SECRET_KEY')),
-        'database_url_set': bool(os.environ.get('DATABASE_URL')),
-    }
-    
-    response_text = '\n'.join([f'{k}: {v}' for k, v in info.items()])
-    return HttpResponse(f"HEALTH CHECK\n\n{response_text}", content_type='text/plain')
-
-
-def simple_test(request):
-    """Ultra-simple test view with no dependencies."""
-    return HttpResponse("SIMPLE TEST: Django is working!", content_type='text/plain')
-
-
-def simple_home(request):
-    """Simple home view for testing without cache or complex queries."""
-    try:
-        from .models import Casestudy
-        casestudies = Casestudy.objects.all()[:4]  # Simple query, limit 4
-        return HttpResponse(f"HOME TEST: Found {casestudies.count()} case studies", content_type='text/plain')
-    except Exception as e:
-        return HttpResponse(f"HOME ERROR: {str(e)}", content_type='text/plain')
-
-
-# @method_decorator(cache_page(60 * 5), name='dispatch')  # Cache for 5 minutes
+@method_decorator(cache_page(60 * 5), name='dispatch')  # Cache for 5 minutes
 class CasestudyList(generic.ListView):
-    # Simplified for debugging
-    queryset = Casestudy.objects.all().order_by('title')  
+    queryset = Casestudy.objects.all().order_by("title")
     template_name = "casestudy/index.html"
+    paginate_by = 6
     context_object_name = "casestudy_list"
-    paginate_by = 4
 
 
 class CasestudyDetail(generic.DetailView):
