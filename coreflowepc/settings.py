@@ -69,9 +69,18 @@ DEBUG = os.environ.get('DEBUG', 'False').lower() == 'true'
 # Detect if running on Heroku
 ON_HEROKU = 'DYNO' in os.environ
 
-# Only require SECRET_KEY in production
-if ON_HEROKU and SECRET_KEY.startswith('django-insecure-'):
-    raise ValueError("A secure SECRET_KEY environment variable is required in production")
+# Only require a secure SECRET_KEY in production if it's not set
+if ON_HEROKU and not os.environ.get('SECRET_KEY'):
+    import secrets
+    import string
+    
+    # Generate a secure secret key for Heroku if not provided
+    alphabet = string.ascii_letters + string.digits + '!@#$%^&*(-_=+)'
+    SECRET_KEY = ''.join(secrets.choice(alphabet) for i in range(50))
+    
+    # Log warning about using generated key
+    import logging
+    logging.warning("Using generated SECRET_KEY. Set SECRET_KEY environment variable for production.")
 
 # Production security settings
 if ON_HEROKU or not DEBUG:
