@@ -330,7 +330,7 @@ class Command(BaseCommand):
                 location_obj, _ = Location.objects.get_or_create(location=data['location'])
                 industry_obj, _ = Industry.objects.get_or_create(industry=data['industry'])
                 
-                # Create case study
+                # Create case study (without image initially)
                 casestudy = Casestudy.objects.create(
                     title=data['title'],
                     slug=data['slug'],
@@ -338,12 +338,11 @@ class Command(BaseCommand):
                     location=location_obj,
                     industry=industry_obj,
                     description=data['description'],
-                    excerpt=data['excerpt'],
-                    casestudyimage=data['image'],
-                    status=1  # Published
+                    excerpt=data['excerpt']
+                    # Note: casestudyimage will be set later by upload_cloudinary command
                 )
                 
-                self.stdout.write(f'✓ Created: {casestudy.title} -> {casestudy.casestudyimage}')
+                self.stdout.write(f'✓ Created: {casestudy.title} (image will be added by upload_cloudinary command)')
                 
             except Exception as e:
                 self.stdout.write(f'❌ Error creating {data["title"]}: {str(e)}')

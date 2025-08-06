@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from cloudinary.models import CloudinaryField
 import os
 
 
@@ -38,13 +39,8 @@ class Casestudy(models.Model):
     industry = models.ForeignKey(
         Industry, on_delete=models.CASCADE, related_name="industry_casestudy"
     )
-    # Simple CharField for static image filename
-    casestudyimage = models.CharField(
-        max_length=200,
-        null=True,
-        blank=True,
-        help_text="Filename of the image in static/images/ directory (e.g., 'floating-roof.png')"
-    )
+    # Cloudinary image field
+    casestudyimage = CloudinaryField('image', default='placeholder')
 
     class Meta:
         ordering = ['title']  # Order by title alphabetically
@@ -52,12 +48,6 @@ class Casestudy(models.Model):
 
     def __str__(self):
         return self.title
-    
-    def get_image_url(self):
-        """Return the static URL for the case study image."""
-        if self.casestudyimage:
-            return f"/static/images/{self.casestudyimage}"
-        return "/static/images/default.png"
 
 
 class Comment(models.Model):
