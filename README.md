@@ -1,6 +1,6 @@
 # CoreFlow EPC Case Studies
 
-A Django web application for showcasing Energy Performance Certificate (EPC) case studies. This project allows users to browse case studies with detailed information about clients, locations, industries, and visual documentation through image uploads.
+A Django web application for showcasing CoreFlow EPC case studies. This project allows users to browse case studies with detailed information about clients, locations, industries of CoreFlow EPC projects, and visual documentation through image uploads.
 
 ![CoreFlow EPC Case Studies](static/images/default.png)
 
@@ -36,6 +36,204 @@ A Django web application for showcasing Energy Performance Certificate (EPC) cas
 - **Custom Styling**: Blue border margins and custom border-radius effects
 - **Visual Indentation**: Clean spacing for client/location/industry information
 - **Responsive Grid**: Bootstrap-powered responsive grid system
+
+#### Industrial Color Palette
+
+The application employs a carefully selected industrial color palette that reflects CoreFlow EPC's professional character and expertise in the process industry.
+
+![Industrial Color Palette](staticfiles/images/industrial.colors.png)
+
+**Color Philosophy**
+Our color scheme draws inspiration from industrial environments, manufacturing facilities, and energy infrastructure. These colors communicate reliability, technical expertise, and industrial strength - core values that define CoreFlow EPC's approach to energy performance consulting.
+
+**Primary Colors**
+- **Steel Blue (#4A90A4)**: Represents technical precision and reliability
+- **Industrial Gray (#6C7B7F)**: Conveys professional expertise and stability  
+- **Charcoal (#2C3E50)**: Provides strong contrast and industrial strength
+- **Slate (#34495E)**: Adds depth while maintaining professional appearance
+
+**Accent Colors**
+- **Safety Orange (#E67E22)**: Highlights important information and calls-to-action
+- **Steel Silver (#BDC3C7)**: Used for subtle borders and secondary elements
+- **Deep Navy (#1B2631)**: Provides maximum contrast for critical text elements
+
+**Design Rationale**
+This industrial-inspired palette creates a visual connection to the manufacturing and energy sectors that CoreFlow EPC serves. The combination of cool blues and grays with warm orange accents creates a professional yet approachable aesthetic that builds trust with clients while emphasizing technical competence.
+
+The colors work harmoniously to:
+- **Establish Authority**: Deep blues and grays convey expertise and professionalism
+- **Ensure Clarity**: High contrast ratios guarantee excellent readability
+- **Guide Attention**: Strategic use of orange guides users to important actions
+- **Reflect Industry**: Colors echo the industrial environments where CoreFlow EPC assessments take place
+
+## UX Design Improvements
+
+### Advanced Visual Design Implementation
+
+During the development process, we implemented sophisticated visual design solutions that significantly enhanced the user experience. The case study detail page showcases an innovative approach to visual storytelling through creative use of background imagery.
+
+#### Key Design Elements
+
+**Full Background Image Coverage**
+- The case study image serves as both a focal point and atmospheric background
+- Dynamic background sizing ensures complete card coverage across all device sizes
+- Seamless integration between content and visual elements
+
+**Semi-transparent Overlay for Readability**
+- Strategic use of `rgba(255, 255, 255, 0.9)` overlay ensures perfect text readability
+- Maintains visual impact while preserving content accessibility
+- Creates depth and layering in the design hierarchy
+
+**Fixed Background Attachment for Parallax Effect**
+- Subtle parallax scrolling creates a modern, engaging user experience
+- Adds depth and sophistication to the page interaction
+- Enhances the immersive quality of each case study
+
+**Rounded Corners and Proper Spacing**
+- Consistent 8px border-radius creates a polished, professional appearance
+- Thoughtful padding (20px) ensures comfortable content consumption
+- Visual harmony between overlay and content elements
+
+#### Design Philosophy
+
+The best results come from experimenting with creative design solutions. The way the case study image now serves as both the focal point AND the atmospheric background really elevates the entire page aesthetic. It makes each case study feel unique and immersive while maintaining perfect readability.
+
+This approach transforms a simple detail page into something that feels modern and engaging, creating a sophisticated and immersive visual experience that sets the application apart from conventional layouts.
+
+#### Technical Implementation
+
+```css
+/* Background image with full coverage */
+background-image: url('image.jpg');
+background-size: cover;
+background-position: center;
+background-repeat: no-repeat;
+background-attachment: fixed;
+
+/* Semi-transparent overlay */
+background-color: rgba(255, 255, 255, 0.9);
+padding: 20px;
+border-radius: 8px;
+```
+
+This innovative design approach demonstrates how creative technical solutions can significantly enhance user experience and visual appeal.
+
+## Agile Project Management
+
+### Development Methodology
+
+This project was developed using Agile methodology principles, emphasizing iterative development, continuous improvement, and flexible response to changing requirements. The development process focused on delivering working software incrementally while maintaining high code quality and user experience standards.
+
+**📋 Project Management**: View the complete sprint planning and task management on our [Sprint Board](https://github.com/users/Katona-Peter/projects/10)
+
+#### Project Planning and User Stories
+
+**Epic: Case Study Management System**
+- As a site administrator, I want to manage case studies so that I can showcase our EPC projects effectively
+- As a visitor, I want to browse case studies so that I can learn about EPC implementations
+- As a registered user, I want to comment on case studies so that I can engage with the content
+
+**Epic: User Authentication and Interaction**
+- As a new user, I want to register an account so that I can participate in discussions
+- As a returning user, I want to log in securely so that I can access my account features
+- As a user, I want my comments to be moderated so that the platform maintains quality content
+
+**Epic: Visual Design and User Experience**
+- As a user, I want an intuitive interface so that I can easily navigate the application
+- As a mobile user, I want a responsive design so that I can access content on any device
+- As a visitor, I want engaging visuals so that the content is appealing and professional
+
+#### Sprint Planning and Execution
+
+**Sprint 1: Foundation and Core Functionality**
+- Project initialization and Django setup
+- Basic model creation (Casestudy, Client, Location, Industry)
+- Initial admin interface configuration
+- Basic template structure
+- Case study listing and detail views
+- Image upload system implementation
+- URL routing and navigation
+- Basic styling and responsive design
+
+**Sprint 2: User Features and Authentication**
+- User authentication system integration
+- Comment system implementation with approval workflow
+- User registration and login functionality
+- Security enhancements
+- Advanced UI/UX improvements
+- Background image implementation
+- Icon integration and styling
+
+**Sprint 3: Visual Enhancement and Deployment**
+- Visual hierarchy optimization
+- Parallax effects and modern design elements
+- Comprehensive testing implementation
+- Bug fixes and performance optimization
+- Heroku deployment configuration
+- Documentation completion
+
+#### Agile Practices Implemented
+
+**Daily Development Reviews**
+- Regular code review and refactoring sessions
+- Continuous integration of new features
+- Immediate bug fixing and issue resolution
+
+**Iterative Design Process**
+- Continuous UI/UX improvements based on visual feedback
+- Responsive design testing across multiple devices
+- User experience optimization through iterative refinement
+
+**Flexible Requirements Management**
+- Adaptive approach to feature implementation
+- Prioritization based on user value and technical feasibility
+- Regular reassessment of project goals and timelines
+
+**Documentation and Knowledge Sharing**
+- Comprehensive README documentation
+- Inline code documentation and comments
+- Technical decision documentation for future reference
+
+#### Tools and Workflow
+
+**Version Control**
+- Git with feature branch workflow
+- Regular commits with descriptive messages
+- Pull request reviews for code quality assurance
+
+**Development Environment**
+- Local development with Django development server
+- Environment variable management for configuration flexibility
+- Database migrations for schema management
+
+**Testing Strategy**
+- Unit tests for models and forms
+- Integration tests for views and user workflows
+- Manual testing for UI/UX validation
+
+**Deployment Pipeline**
+- Continuous deployment to Heroku
+- Environment-specific configuration management
+- Production monitoring and maintenance
+
+#### Lessons Learned
+
+**Technical Growth**
+- Advanced Django feature implementation
+- Complex CSS and JavaScript integration
+- Database design and optimization techniques
+
+**Design Evolution**
+- Importance of iterative design improvement
+- User feedback integration in development process
+- Balance between functionality and aesthetic appeal
+
+**Project Management**
+- Effective time management through sprint planning
+- Priority-based feature development
+- Documentation importance for project sustainability
+
+This Agile approach enabled the delivery of a comprehensive, user-friendly web application while maintaining code quality and incorporating continuous improvements throughout the development process.
 
 ## Technologies Used
 
@@ -213,6 +411,24 @@ The application features an advanced image upload system:
 - **Responsive Design**: Adapts to different screen sizes
 
 ## Models
+
+### Entity Relationship Diagram
+
+![Database ERD](static/images/erd-diagram.png)
+
+The database schema consists of four main entities with clear relationships designed to support comprehensive case study management and user interaction:
+
+**Core Relationships:**
+- **Case Studies** are linked to **Clients**, **Locations**, and **Industries** through foreign key relationships
+- **Comments** are associated with specific **Case Studies** and **Users** for structured feedback management
+- **Users** can create multiple **Comments** across different **Case Studies**
+- Each **Case Study** belongs to exactly one **Client**, **Location**, and **Industry** for clear categorization
+
+**Design Principles:**
+- Normalized structure to eliminate data redundancy
+- Clear foreign key constraints to maintain referential integrity
+- Scalable architecture supporting future feature expansion
+- User-centric design enabling authenticated interactions
 
 ### Casestudy Model
 - `title`: Unique case study title
