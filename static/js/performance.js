@@ -45,9 +45,9 @@ document.addEventListener('DOMContentLoaded', function() {
         }, { passive: true });
     });
 
-    // Optimize form submissions
-    const forms = document.querySelectorAll('form');
-    forms.forEach(form => {
+    // Optimize form submissions for comment forms only
+    const commentForms = document.querySelectorAll('form[action*="comment"]');
+    commentForms.forEach(form => {
         form.addEventListener('submit', function() {
             const submitBtn = this.querySelector('button[type="submit"]');
             if (submitBtn) {

@@ -31,7 +31,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.environ.get('SECRET_KEY', 'django-insecure-o4%*d**l36_fvz0^v@%%*=2%+x^-@fxxj=ox9)pi939c-n%(')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False  # Set to False for production deployment
+DEBUG = False  # Set to True for development, False for production
 
 ALLOWED_HOSTS = ['.herokuapp.com', '127.0.0.1', 'localhost']
 
@@ -59,6 +59,7 @@ INSTALLED_APPS = [
 SITE_ID = 1
 LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/'
+
 CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
 CRISPY_TEMPLATE_PACK = "bootstrap5"
 
@@ -127,7 +128,7 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
-
+ACCOUNT_EMAIL_VERIFICATION = 'none'
 # Internationalization
 # https://docs.djangoproject.com/en/4.2/topics/i18n/
 
@@ -154,13 +155,21 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # Email configuration
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
-# Allauth settings
+# Django Allauth Configuration
 ACCOUNT_EMAIL_VERIFICATION = 'none'
-ACCOUNT_AUTHENTICATION_METHOD = 'username_email'
-ACCOUNT_EMAIL_REQUIRED = False
+ACCOUNT_EMAIL_REQUIRED = False  
 ACCOUNT_USERNAME_REQUIRED = True
 ACCOUNT_SIGNUP_EMAIL_ENTER_TWICE = False
 ACCOUNT_USERNAME_MIN_LENGTH = 4
+ACCOUNT_SESSION_REMEMBER = True
+ACCOUNT_AUTHENTICATION_METHOD = 'username'
+ACCOUNT_LOGOUT_ON_GET = True  # Allow logout via GET request
+ACCOUNT_LOGOUT_REDIRECT_URL = '/'  # Redirect after logout
+ACCOUNT_LOGOUT_ON_PASSWORD_CHANGE = False  # Don't logout on password change
+
+# Redirect URLs  
+LOGIN_REDIRECT_URL = '/'
+LOGOUT_REDIRECT_URL = '/'
 
 # Cloudinary configuration
 CLOUDINARY_STORAGE = {

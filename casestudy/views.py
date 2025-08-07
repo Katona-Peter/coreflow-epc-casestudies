@@ -1,16 +1,15 @@
-from django.shortcuts import render, get_object_or_404, reverse
+from django.shortcuts import render, get_object_or_404, reverse, redirect
 from django.views import generic
 from django.contrib import messages
+from django.contrib.auth import logout
 from django.http import HttpResponseRedirect
-from django.views.decorators.cache import cache_page
 from django.utils.decorators import method_decorator
 from .models import Casestudy, Comment
 from .forms import CommentForm
 
 
-@method_decorator(cache_page(60 * 5), name='dispatch')  # Cache for 5 minutes
 class CasestudyList(generic.ListView):
-    queryset = Casestudy.objects.all().order_by("title")
+    queryset = Casestudy.objects.select_related('client', 'location', 'industry').order_by("title")
     template_name = "casestudy/index.html"
     paginate_by = 4
     context_object_name = "casestudy_list"
@@ -21,7 +20,6 @@ class CasestudyDetail(generic.DetailView):
     template_name = "casestudy/casestudy_detail.html"
 
 
-@cache_page(60 * 10)  # Cache detail pages for 10 minutes
 def casestudy_detail(request, slug):
     """
     Display an individual case study with comments and comment form.
@@ -31,26 +29,19 @@ def casestudy_detail(request, slug):
         'client', 'location', 'industry'
     ).prefetch_related('comments').all()
     casestudy = get_object_or_404(queryset, slug=slug)
-    comments = casestudy.comments.select_related('author').filter(
-        approved=True
-    ).order_by("-created_on")
-    comment_count = casestudy.comments.filter(approved=True).count()
-
-    # Check if user has pending comments for informational message
+    
+    # Show approved comments + user's own pending comments
     if request.user.is_authenticated:
-        user_pending_comments = casestudy.comments.filter(
-            author=request.user,
-            approved=False
-        ).count()
-
-        if user_pending_comments > 0:
-            messages.add_message(
-                request,
-                messages.INFO,
-                f'You have {user_pending_comments} comment(s) awaiting '
-                f'approval on this case study. Approved comments will '
-                f'appear in the discussion below.'
-            )
+        from django.db.models import Q
+        comments = casestudy.comments.select_related('author').filter(
+            Q(approved=True) | Q(author=request.user, approved=False)
+        ).order_by("-created_on")
+    else:
+        comments = casestudy.comments.select_related('author').filter(
+            approved=True
+        ).order_by("-created_on")
+    
+    comment_count = casestudy.comments.filter(approved=True).count()
 
     if request.method == "POST":
         if not request.user.is_authenticated:
@@ -170,3 +161,11 @@ def comment_delete(request, slug, comment_id):
         )
 
     return HttpResponseRedirect(reverse('casestudy_detail', args=[slug]))
+
+
+def custom_logout(request):
+    """Custom logout view to ensure proper logout and message"""
+    if request.user.is_authenticated:
+        logout(request)
+        messages.success(request, 'You have been successfully logged out.')
+    return redirect('home')
