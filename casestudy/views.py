@@ -51,6 +51,7 @@ def casestudy_detail(request, slug):
                 'You must be logged in to submit a comment. Please log '
                 'in or register to join the discussion.'
             )
+            comment_form = CommentForm()  # Create empty form for unauthenticated users
         else:
             comment_form = CommentForm(data=request.POST)
             if comment_form.is_valid():
