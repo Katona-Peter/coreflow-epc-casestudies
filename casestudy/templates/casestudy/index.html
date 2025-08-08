@@ -43,23 +43,37 @@
                         <!-- Layout with solid background left side and white right side -->
                         <div class="card-overlay" style="height: 100%; width: 100%; display: flex;">
                             <div class="card-left" style="flex: 0 0 50%; max-width: 50%; display: flex; align-items: flex-start; justify-content: center; padding: 0; height: 100%; overflow: hidden; background: rgba(255, 255, 255, 0.95);">
-                                <!-- Optimized image with lazy loading, performance hints, and hover effect -->
+                                <!-- Optimized image with priority loading for LCP improvement -->
                                 {% if casestudy.casestudyimage and casestudy.casestudyimage != 'placeholder' %}
                                     <img src="{{ casestudy.casestudyimage.url }}" 
                                          alt="{{ casestudy.title }} case study image" 
                                          class="img-fluid case-study-image" 
                                          style="width: 100%; height: auto; display: block; margin: 0; border-radius: 8px 0 8px 0; box-shadow: 0 4px 8px rgba(0,0,0,0.2);"
+                                         {% if forloop.first %}
+                                         loading="eager"
+                                         fetchpriority="high"
+                                         {% else %}
                                          loading="lazy"
+                                         fetchpriority="low"
+                                         {% endif %}
                                          decoding="async"
-                                         fetchpriority="low">
+                                         width="400"
+                                         height="300">
                                 {% else %}
                                     <img src="{% static 'images/default.png' %}" 
                                          alt="Default case study image" 
                                          class="img-fluid case-study-image" 
                                          style="width: 100%; height: auto; display: block; margin: 0; border-radius: 8px 0 8px 0; box-shadow: 0 4px 8px rgba(0,0,0,0.2);"
+                                         {% if forloop.first %}
+                                         loading="eager"
+                                         fetchpriority="high"
+                                         {% else %}
                                          loading="lazy"
+                                         fetchpriority="low"
+                                         {% endif %}
                                          decoding="async"
-                                         fetchpriority="low">
+                                         width="400"
+                                         height="300">
                                 {% endif %}
                             </div>
                             <div class="card-right d-flex flex-column" style="flex: 0 0 50%; max-width: 50%; padding: 10px; display: flex; flex-direction: column; justify-content: center; height: 100%; background: rgba(255, 255, 255, 0.95);">

@@ -4,10 +4,14 @@ from django.contrib import messages
 from django.contrib.auth import logout
 from django.http import HttpResponseRedirect
 from django.utils.decorators import method_decorator
+from django.views.decorators.cache import cache_page
+from django.views.decorators.vary import vary_on_headers
 from .models import Casestudy, Comment
 from .forms import CommentForm
 
 
+@method_decorator(cache_page(60 * 5), name='dispatch')  # Cache for 5 minutes
+@method_decorator(vary_on_headers('User-Agent'), name='dispatch')
 class CasestudyList(generic.ListView):
     queryset = Casestudy.objects.select_related('client', 'location', 'industry').order_by("title")
     template_name = "casestudy/index.html"
