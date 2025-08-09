@@ -5,11 +5,9 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
-from casestudy.views import custom_logout
-
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('accounts/logout/', custom_logout, name='account_logout'),  # Custom logout override
+    # Use Allauth's default logout view
     path("accounts/", include("allauth.urls")),
     path('summernote/', include('django_summernote.urls')),
     path("", include("casestudy.urls"), name="casestudy-urls"),

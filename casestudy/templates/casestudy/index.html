@@ -1,3 +1,4 @@
+
 {% extends "base.html" %}
 
 {% block content %}
@@ -45,35 +46,42 @@
                             <div class="card-left" style="flex: 0 0 50%; max-width: 50%; display: flex; align-items: flex-start; justify-content: center; padding: 0; height: 100%; overflow: hidden; background: rgba(255, 255, 255, 0.95);">
                                 <!-- Optimized image with priority loading for LCP improvement -->
                                 {% if casestudy.casestudyimage and casestudy.casestudyimage != 'placeholder' %}
-                                    <img src="{{ casestudy.casestudyimage.url }}" 
-                                         alt="{{ casestudy.title }} case study image" 
-                                         class="img-fluid case-study-image" 
-                                         style="width: 100%; height: auto; display: block; margin: 0; border-radius: 8px 0 8px 0; box-shadow: 0 4px 8px rgba(0,0,0,0.2);"
-                                         {% if forloop.first %}
-                                         loading="eager"
-                                         fetchpriority="high"
-                                         {% else %}
-                                         loading="lazy"
-                                         fetchpriority="low"
-                                         {% endif %}
-                                         decoding="async"
-                                         width="400"
-                                         height="300">
+                                    <picture>
+                                        <source srcset="{{ casestudy.casestudyimage.url|cut:'.png'|add:'.webp'|add:'?w=400&h=300&c=fill&q=auto&f=auto' }}" type="image/webp">
+                                        <source srcset="{{ casestudy.casestudyimage.url|cut:'.png'|add:'.jpg'|add:'?w=400&h=300&c=fill&q=auto&f=auto' }}" type="image/jpeg">
+                                        <img src="{{ casestudy.casestudyimage.url|add:'?w=400&h=300&c=fill&q=auto&f=auto' }}"
+                                             alt="{{ casestudy.title }} case study image"
+                                             class="img-fluid case-study-image"
+                                             style="width: 100%; height: auto; display: block; margin: 0; border-radius: 8px 0 8px 0; box-shadow: 0 4px 8px rgba(0,0,0,0.2);"
+                                             {% if forloop.first %}
+                                             loading="eager"
+                                             fetchpriority="high"
+                                             {% else %}
+                                             loading="lazy"
+                                             fetchpriority="low"
+                                             {% endif %}
+                                             decoding="async"
+                                             width="400"
+                                             height="300">
+                                    </picture>
                                 {% else %}
-                                    <img src="{% static 'images/default.png' %}" 
-                                         alt="Default case study image" 
-                                         class="img-fluid case-study-image" 
-                                         style="width: 100%; height: auto; display: block; margin: 0; border-radius: 8px 0 8px 0; box-shadow: 0 4px 8px rgba(0,0,0,0.2);"
-                                         {% if forloop.first %}
-                                         loading="eager"
-                                         fetchpriority="high"
-                                         {% else %}
-                                         loading="lazy"
-                                         fetchpriority="low"
-                                         {% endif %}
-                                         decoding="async"
-                                         width="400"
-                                         height="300">
+                                    <picture>
+                                        <source srcset="{% static 'images/default.webp' %}" type="image/webp">
+                                        <img src="{% static 'images/default.png' %}"
+                                             alt="Default case study image"
+                                             class="img-fluid case-study-image"
+                                             style="width: 100%; height: auto; display: block; margin: 0; border-radius: 8px 0 8px 0; box-shadow: 0 4px 8px rgba(0,0,0,0.2);"
+                                             {% if forloop.first %}
+                                             loading="eager"
+                                             fetchpriority="high"
+                                             {% else %}
+                                             loading="lazy"
+                                             fetchpriority="low"
+                                             {% endif %}
+                                             decoding="async"
+                                             width="400"
+                                             height="300">
+                                    </picture>
                                 {% endif %}
                             </div>
                             <div class="card-right d-flex flex-column" style="flex: 0 0 50%; max-width: 50%; padding: 10px; display: flex; flex-direction: column; justify-content: center; height: 100%; background: rgba(255, 255, 255, 0.95);">
@@ -84,9 +92,9 @@
                                 </div>   
                                 <p class="flex-grow-1">{{ casestudy.excerpt }}</p>                         
                                 <ul class="mt-auto">
-                                    <li><strong><i class="fas fa-user" style="display: inline-block !important; width: 20px !important; font-style: normal !important;"></i> Client:</strong> {{ casestudy.client }}</li>
-                                    <li><strong><i class="fas fa-globe" style="display: inline-block !important; width: 20px !important; font-style: normal !important;"></i> Location:</strong> {{ casestudy.location }}</li>
-                                    <li><strong><i class="fas fa-industry" style="display: inline-block !important; width: 20px !important; font-style: normal !important;"></i> Industry:</strong> {{ casestudy.industry }}</li>
+                                    <li><strong><i class="fa fa-user" aria-hidden="true" style="display: inline-block; width: 20px; font-style: normal;"></i> Client:</strong> {{ casestudy.client }}</li>
+                                    <li><strong><i class="fa fa-globe" aria-hidden="true" style="display: inline-block; width: 20px; font-style: normal;"></i> Location:</strong> {{ casestudy.location }}</li>
+                                    <li><strong><i class="fa fa-industry" aria-hidden="true" style="display: inline-block; width: 20px; font-style: normal;"></i> Industry:</strong> {{ casestudy.industry }}</li>
                                 </ul>
                             </div>
                         </div>

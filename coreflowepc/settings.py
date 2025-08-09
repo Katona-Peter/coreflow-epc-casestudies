@@ -31,7 +31,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.environ.get('SECRET_KEY', 'django-insecure-o4%*d**l36_fvz0^v@%%*=2%+x^-@fxxj=ox9)pi939c-n%(')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False  # Set to True for development, False for production
+DEBUG = True  # Set to True for development, False for production
 
 ALLOWED_HOSTS = ['.herokuapp.com', '127.0.0.1', 'localhost']
 
@@ -54,6 +54,12 @@ INSTALLED_APPS = [
     'cloudinary_storage',
     'cloudinary',
     'casestudy',
+]
+
+# Ensure Django and Allauth authentication backends are set
+AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.ModelBackend',
+    'allauth.account.auth_backends.AuthenticationBackend',
 ]
 
 SITE_ID = 1
@@ -163,16 +169,18 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # Email configuration
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
+
 # Django Allauth Configuration
+
+# Django Allauth Configuration (updated for deprecations)
 ACCOUNT_EMAIL_VERIFICATION = 'none'
-ACCOUNT_EMAIL_REQUIRED = False  
-ACCOUNT_USERNAME_REQUIRED = True
-ACCOUNT_SIGNUP_EMAIL_ENTER_TWICE = False
+
+ACCOUNT_SIGNUP_FIELDS = ['username*', 'password1*', 'password2*']
+# If you want email to be required, add 'email*' to the list above
+ACCOUNT_LOGIN_METHODS = {'username'}  # Updated for Allauth 0.61+ (Django 4.2+)
 ACCOUNT_USERNAME_MIN_LENGTH = 4
 ACCOUNT_SESSION_REMEMBER = True
-ACCOUNT_AUTHENTICATION_METHOD = 'username'
-ACCOUNT_LOGOUT_ON_GET = True  # Allow logout via GET request
-ACCOUNT_LOGOUT_REDIRECT_URL = '/'  # Redirect after logout
+ACCOUNT_LOGOUT_ON_GET = False  # Require POST for logout, show confirmation page
 ACCOUNT_LOGOUT_ON_PASSWORD_CHANGE = False  # Don't logout on password change
 
 # Redirect URLs  

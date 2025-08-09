@@ -30,15 +30,15 @@
                                 <!-- Client, Location, Industry Info under the image -->
                                 <div class="mt-3">
                                     <div class="mb-2" style="margin-left: 60px; display: flex; align-items: center;">
-                                        <strong style="margin-right: 10px;"><i class="fas fa-user" style="display: inline-block !important; font-style: normal !important;"></i> Client:</strong>
+                                        <strong style="margin-right: 10px;"><i class="fa fa-user" aria-hidden="true" style="display: inline-block !important; font-style: normal !important;"></i> Client:</strong>
                                         <span>{{ casestudy.client }}</span>
                                     </div>
                                     <div class="mb-2" style="margin-left: 60px; display: flex; align-items: center;">
-                                        <strong style="margin-right: 10px;"><i class="fas fa-globe" style="display: inline-block !important; font-style: normal !important;"></i> Location:</strong>
+                                        <strong style="margin-right: 10px;"><i class="fa fa-globe" aria-hidden="true" style="display: inline-block !important; font-style: normal !important;"></i> Location:</strong>
                                         <span>{{ casestudy.location }}</span>
                                     </div>
                                     <div class="mb-2" style="margin-left: 60px; display: flex; align-items: center;">
-                                        <strong style="margin-right: 10px;"><i class="fas fa-industry" style="display: inline-block !important; font-style: normal !important;"></i> Industry:</strong>
+                                        <strong style="margin-right: 10px;"><i class="fa fa-industry" aria-hidden="true" style="display: inline-block !important; font-style: normal !important;"></i> Industry:</strong>
                                         <span>{{ casestudy.industry }}</span>
                                     </div>
                                 </div>
@@ -56,7 +56,7 @@
                 </div>
                 <div class="card-footer">
                     <a href="{% url 'home' %}" class="btn btn-primary">
-                        <i class="fas fa-arrow-left"></i> Back to Case Studies
+                        Back to Case Studies
                     </a>
                 </div>
             </div>
@@ -66,10 +66,10 @@
   <div class="row">
     <div class="col-12 d-flex justify-content-between align-items-center">
       <strong class="text-secondary">
-        <i class="far fa-comments"></i> {{ comment_count }}
+        <i class="fa fa-comments"></i> {{ comment_count }}
       </strong>
       <button type="button" class="btn btn-sm btn-outline-info" data-bs-toggle="modal" data-bs-target="#messageHelpModal">
-        <i class="fas fa-question-circle me-1"></i> Message Help
+        <i class="fa fa-question-circle me-1"></i> Message Help
       </button>
     </div>
     <div class="col-12">

@@ -2,7 +2,7 @@
 body {
     background-color: #F4F6F8;
     font-family: 'Open Sans', sans-serif;
-    padding-top: 80px; /* Only top padding for fixed navbar */
+    padding-top: 0 !important;
     margin: 0;
     overflow-x: hidden; /* Prevent horizontal scroll */
 }

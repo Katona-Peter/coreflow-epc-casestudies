@@ -1,196 +1,35 @@
 {% extends "base.html" %}
-{% load crispy_forms_tags %}
 {% load i18n %}
-
 {% block head_title %}{% trans "Sign Up" %}{% endblock %}
-
 {% block content %}
-<div class="container">
+<div class="container py-5">
     <div class="row justify-content-center">
-        <div class="col-lg-5 col-md-7 col-sm-9">
-            <div class="card shadow-lg border-0 rounded-lg mt-5 mb-5">
-                <div class="card-header bg-primary text-white">
-                    <h3 class="text-center font-weight-light my-4">
-                        <i class="fas fa-user-plus me-2"></i>{% trans "Create Account" %}
-                    </h3>
-                </div>
-                <div class="card-body">
-                    <div class="text-center mb-4">
-                        <p class="text-muted">{% trans "Join our case study platform and start engaging with our content." %}</p>
-                        <p class="small">{% trans "Already have an account?" %} <a class="text-primary text-decoration-none fw-bold" href="{% url 'account_login' %}">{% trans "Sign in here" %}</a></p>
-                    </div>
-                    
-                    <form method="POST" action="{% url 'account_signup' %}">
+        <div class="col-md-6 col-lg-5">
+            <div class="card shadow-lg border-3 rounded-4" style="border: 3px solid #004C99;">
+                <div class="card-body p-4">
+                    <h3 class="card-title text-center mb-3" style="font-weight:700; color:#004C99;">{% trans "Sign Up" %}</h3>
+                    <p class="text-center mb-4" style="color:#555;">{% blocktrans %}Already have an account? Then please <a href="{{ login_url }}">sign in</a>.{% endblocktrans %}</p>
+                    <form method="post" action="{% url 'account_signup' %}">
                         {% csrf_token %}
-                        
-                        <!-- Username Field -->
                         <div class="mb-3">
-                            <div class="row align-items-center">
-                                <div class="col-4">
-                                    <label for="{{ form.username.id_for_label }}" class="form-label mb-0 text-start">
-                                        <i class="fas fa-user me-1"></i>{{ form.username.label }}
-                                    </label>
-                                </div>
-                                <div class="col-8">
-                                    {{ form.username }}
-                                </div>
-                            </div>
-                            {% if form.username.errors %}
-                                <div class="invalid-feedback d-block">
-                                    {{ form.username.errors }}
-                                </div>
-                            {% endif %}
-                            {% if form.username.help_text %}
-                                <div class="form-text">{{ form.username.help_text }}</div>
-                            {% endif %}
+                            {{ form.as_p }}
                         </div>
-                        
-                        <!-- Email Field (if required) -->
-                        {% if form.email %}
-                        <div class="mb-3">
-                            <div class="row align-items-center">
-                                <div class="col-4">
-                                    <label for="{{ form.email.id_for_label }}" class="form-label mb-0 text-start">
-                                        <i class="fas fa-envelope me-1"></i>{{ form.email.label }}
-                                    </label>
-                                </div>
-                                <div class="col-8">
-                                    {{ form.email }}
-                                </div>
-                            </div>
-                            {% if form.email.errors %}
-                                <div class="invalid-feedback d-block">
-                                    {{ form.email.errors }}
-                                </div>
-                            {% endif %}
-                        </div>
-                        {% endif %}
-                        
-                        <!-- Password Field -->
-                        <div class="mb-3">
-                            <div class="row align-items-center">
-                                <div class="col-4">
-                                    <label for="{{ form.password1.id_for_label }}" class="form-label mb-0 text-start">
-                                        <i class="fas fa-lock me-1"></i>{{ form.password1.label }}
-                                    </label>
-                                </div>
-                                <div class="col-8">
-                                    {{ form.password1 }}
-                                </div>
-                            </div>
-                            {% if form.password1.errors %}
-                                <div class="invalid-feedback d-block">
-                                    {{ form.password1.errors }}
-                                </div>
-                            {% endif %}
-                            {% if form.password1.help_text %}
-                                <div class="form-text">{{ form.password1.help_text }}</div>
-                            {% endif %}
-                        </div>
-                        
-                        <!-- Confirm Password Field -->
-                        <div class="mb-3">
-                            <div class="row align-items-center">
-                                <div class="col-4">
-                                    <label for="{{ form.password2.id_for_label }}" class="form-label mb-0 text-start">
-                                        <i class="fas fa-lock me-1"></i>{{ form.password2.label }}
-                                    </label>
-                                </div>
-                                <div class="col-8">
-                                    {{ form.password2 }}
-                                </div>
-                            </div>
-                            {% if form.password2.errors %}
-                                <div class="invalid-feedback d-block">
-                                    {{ form.password2.errors }}
-                                </div>
-                            {% endif %}
-                        </div>
-                        
-                        {% if redirect_field_value %}
-                            <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
-                        {% endif %}
-                        
-                        <!-- Submit Button -->
-                        <div class="d-grid">
-                            <button type="submit" class="btn btn-primary btn-lg">
-                                <i class="fas fa-user-plus me-2"></i>{% trans "Create Account" %}
-                            </button>
+                        {{ redirect_field }}
+                        <div class="d-grid gap-2">
+                            <button class="btn btn-primary btn-lg" type="submit" style="background-color:#004C99; border:none;">{% trans "Sign Up" %}</button>
                         </div>
                     </form>
-                </div>
-                <div class="card-footer text-center py-3">
-                    <div class="small text-muted">
-                        <i class="fas fa-shield-alt me-1"></i>Your information is secure and protected
-                    </div>
+                    {% if PASSKEY_SIGNUP_ENABLED %}
+                        <hr>
+                        <a class="btn btn-outline-primary btn-lg w-100 mt-2" href="{{ signup_by_passkey_url }}">{% trans "Sign up using a passkey" %}</a>
+                    {% endif %}
+                    {% if SOCIALACCOUNT_ENABLED %}
+                        <hr>
+                        {% include "socialaccount/snippets/login.html" with page_layout="entrance" %}
+                    {% endif %}
                 </div>
             </div>
         </div>
     </div>
 </div>
-
-<style>
-.card {
-    border-radius: 1rem;
-}
-
-.card-header.bg-primary {
-    border-radius: 1rem 1rem 0 0 !important;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
-}
-
-.form-control {
-    border-radius: 0.5rem;
-    border: 2px solid #e9ecef;
-    background-color: #ffffff;
-    transition: all 0.3s ease;
-    padding: 0.75rem 1rem;
-}
-
-.form-control:focus {
-    border-color: #667eea;
-    background-color: #ffffff;
-    box-shadow: 0 0 0 0.2rem rgba(102, 126, 234, 0.25);
-}
-
-.form-label {
-    font-weight: 500;
-    color: #495057;
-}
-
-.btn-primary {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    border: none;
-    border-radius: 0.5rem;
-    padding: 0.75rem 1.5rem;
-    font-weight: 600;
-    transition: all 0.3s ease;
-}
-
-.btn-primary:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
-}
-
-.text-primary {
-    color: #667eea !important;
-}
-
-.invalid-feedback {
-    color: #dc3545;
-    font-size: 0.875rem;
-}
-
-.form-text {
-    color: #6c757d;
-    font-size: 0.825rem;
-    margin-top: 0.25rem;
-}
-
-.card-footer {
-    background-color: #f8f9fa;
-    border-radius: 0 0 1rem 1rem;
-}
-</style>
-
 {% endblock %}

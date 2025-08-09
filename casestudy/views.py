@@ -1,3 +1,14 @@
+from django.http import HttpResponse
+
+# Debug view to print session and user info
+def debug_session(request):
+    info = [
+        f"user.is_authenticated: {request.user.is_authenticated}",
+        f"user: {request.user}",
+        f"session_key: {request.session.session_key}",
+        f"session items: {dict(request.session.items())}",
+    ]
+    return HttpResponse("<br>".join(info))
 from django.shortcuts import render, get_object_or_404, reverse, redirect
 from django.views import generic
 from django.contrib import messages
@@ -10,13 +21,27 @@ from .models import Casestudy, Comment
 from .forms import CommentForm
 
 
-@method_decorator(cache_page(60 * 5), name='dispatch')  # Cache for 5 minutes
+
+from django.utils.decorators import method_decorator
+from django.views.decorators.cache import cache_control, cache_page
+from django.views.decorators.vary import vary_on_headers
+
 @method_decorator(vary_on_headers('User-Agent'), name='dispatch')
 class CasestudyList(generic.ListView):
     queryset = Casestudy.objects.select_related('client', 'location', 'industry').order_by("title")
     template_name = "casestudy/index.html"
     paginate_by = 4
     context_object_name = "casestudy_list"
+
+    @method_decorator(cache_control(no_cache=True, must_revalidate=True, no_store=True))
+    def dispatch(self, request, *args, **kwargs):
+        if request.user.is_authenticated:
+            response = super().dispatch(request, *args, **kwargs)
+            response['Cache-Control'] = 'no-cache, no-store, must-revalidate, private'
+            response['Pragma'] = 'no-cache'
+            response['Expires'] = '0'
+            return response
+        return super().dispatch(request, *args, **kwargs)
 
 
 class CasestudyDetail(generic.DetailView):
@@ -168,9 +193,3 @@ def comment_delete(request, slug, comment_id):
     return HttpResponseRedirect(reverse('casestudy_detail', args=[slug]))
 
 
-def custom_logout(request):
-    """Custom logout view to ensure proper logout and message"""
-    if request.user.is_authenticated:
-        logout(request)
-        messages.success(request, 'You have been successfully logged out.')
-    return redirect('home')
