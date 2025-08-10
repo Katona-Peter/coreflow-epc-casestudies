@@ -1,5 +1,7 @@
 
+
 {% extends "base.html" %}
+{% load cache %}
 
 {% block content %}
 
@@ -33,33 +35,60 @@
     <div class="row">
         <div class="col-12 mt-3 left">
             <div class="row">
+                {% cache 300 casestudy_list page_obj.number %}
                 {% for casestudy in casestudy_list %}
                 <div class="col-md-6 mb-4 d-flex">
                     {% load static %}
                     {% if casestudy.casestudyimage %}
                         <div class="card card-blue-margin h-100 w-100" style="background-image: url('{{ casestudy.casestudyimage.url }}'); background-size: cover; background-position: center; background-repeat: no-repeat;">
                     {% else %}
-                        <div class="card card-blue-margin h-100 w-100" style="background-image: url('{% static 'images/default.png' %}'); background-size: cover; background-position: center; background-repeat: no-repeat;">
+                        <div class="card card-blue-margin h-100 w-100" style="background-image: url({% static "images/default.png" %}); background-size: cover; background-position: center; background-repeat: no-repeat;">
                     {% endif %}
                         <!-- Layout with solid background left side and white right side -->
                         <div class="card-overlay" style="height: 100%; width: 100%; display: flex;">
                             <div class="card-left" style="flex: 0 0 50%; max-width: 50%; display: flex; align-items: flex-start; justify-content: center; padding: 0; height: 100%; overflow: hidden; background: rgba(255, 255, 255, 0.95);">
                                 <!-- Optimized image with priority loading for LCP improvement -->
-                                {% if casestudy.casestudyimage and casestudy.casestudyimage != 'placeholder' %}
+                                {% if forloop.first %}
+                                    <picture>
+                                        <source srcset="{% static 'images/electric-arc-furnace-eaf-expansion-project-lcp.webp' %}" type="image/webp">
+                                        <img src="{% static 'images/electric-arc-furnace-eaf-expansion-project-lcp.webp' %}"
+                                             alt="Electric Arc Furnace EAF Expansion Project"
+                                             class="img-fluid case-study-image"
+                                             style="width: 100%; height: auto; display: block; margin: 0; border-radius: 8px 0 8px 0; box-shadow: 0 4px 8px rgba(0,0,0,0.2);"
+                                             loading="eager"
+                                             fetchpriority="high"
+                                             decoding="async"
+                                             width="400"
+                                             height="300">
+                                    </picture>
+                                {% elif casestudy.casestudyimage and casestudy.casestudyimage != 'placeholder' %}
                                     <picture>
                                         <source srcset="{{ casestudy.casestudyimage.url|cut:'.png'|add:'.webp'|add:'?w=400&h=300&c=fill&q=auto&f=auto' }}" type="image/webp">
                                         <source srcset="{{ casestudy.casestudyimage.url|cut:'.png'|add:'.jpg'|add:'?w=400&h=300&c=fill&q=auto&f=auto' }}" type="image/jpeg">
                                         <img src="{{ casestudy.casestudyimage.url|add:'?w=400&h=300&c=fill&q=auto&f=auto' }}"
+                                             srcset="{{ casestudy.casestudyimage.url|add:'?w=320&h=240&c=fill&q=auto&f=auto' }} 320w, {{ casestudy.casestudyimage.url|add:'?w=400&h=300&c=fill&q=auto&f=auto' }} 400w, {{ casestudy.casestudyimage.url|add:'?w=600&h=450&c=fill&q=auto&f=auto' }} 600w, {{ casestudy.casestudyimage.url|add:'?w=800&h=600&c=fill&q=auto&f=auto' }} 800w"
+                                             sizes="(max-width: 576px) 90vw, (max-width: 768px) 45vw, 400px"
                                              alt="{{ casestudy.title }} case study image"
                                              class="img-fluid case-study-image"
                                              style="width: 100%; height: auto; display: block; margin: 0; border-radius: 8px 0 8px 0; box-shadow: 0 4px 8px rgba(0,0,0,0.2);"
-                                             {% if forloop.first %}
-                                             loading="eager"
-                                             fetchpriority="high"
-                                             {% else %}
                                              loading="lazy"
                                              fetchpriority="low"
-                                             {% endif %}
+                                             decoding="async"
+                                             width="400"
+                                             height="300">
+                                    </picture>
+                                {% elif casestudy.casestudyimage and casestudy.casestudyimage != 'placeholder' %}
+                                    <picture>
+                                        <source srcset="{{ casestudy.casestudyimage.url|cut:'.png'|add:'.webp'|add:'?w=400&h=300&c=fill&q=auto&f=auto' }}" type="image/webp">
+                                        <source srcset="{{ casestudy.casestudyimage.url|cut:'.png'|add:'.jpg'|add:'?w=400&h=300&c=fill&q=auto&f=auto' }}" type="image/jpeg">
+                                        <img src="{{ casestudy.casestudyimage.url|add:'?w=400&h=300&c=fill&q=auto&f=auto' }}"
+                                             srcset="{{ casestudy.casestudyimage.url|add:'?w=320&h=240&c=fill&q=auto&f=auto' }} 320w, {{ casestudy.casestudyimage.url|add:'?w=400&h=300&c=fill&q=auto&f=auto' }} 400w, {{ casestudy.casestudyimage.url|add:'?w=600&h=450&c=fill&q=auto&f=auto' }} 600w, {{ casestudy.casestudyimage.url|add:'?w=800&h=600&c=fill&q=auto&f=auto' }} 800w"
+                                             sizes="(max-width: 576px) 90vw, (max-width: 768px) 45vw, 400px"
+                                             alt="{{ casestudy.title }} case study image"
+                                             class="img-fluid case-study-image"
+                                             style="width: 100%; height: auto; display: block; margin: 0; border-radius: 8px 0 8px 0; box-shadow: 0 4px 8px rgba(0,0,0,0.2);"
+                                             loading="lazy"
+                                             fetchpriority="low"
                                              decoding="async"
                                              width="400"
                                              height="300">
@@ -71,13 +100,8 @@
                                              alt="Default case study image"
                                              class="img-fluid case-study-image"
                                              style="width: 100%; height: auto; display: block; margin: 0; border-radius: 8px 0 8px 0; box-shadow: 0 4px 8px rgba(0,0,0,0.2);"
-                                             {% if forloop.first %}
-                                             loading="eager"
-                                             fetchpriority="high"
-                                             {% else %}
-                                             loading="lazy"
-                                             fetchpriority="low"
-                                             {% endif %}
+                                             loading="{% if forloop.first %}eager{% else %}lazy{% endif %}"
+                                             fetchpriority="{% if forloop.first %}high{% else %}low{% endif %}"
                                              decoding="async"
                                              width="400"
                                              height="300">
@@ -101,6 +125,7 @@
                     </div>
                 </div>
                 {% endfor %}
+                {% endcache %}
             </div>
         </div>
     </div>

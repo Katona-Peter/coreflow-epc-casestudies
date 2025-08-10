@@ -26,22 +26,14 @@ from django.utils.decorators import method_decorator
 from django.views.decorators.cache import cache_control, cache_page
 from django.views.decorators.vary import vary_on_headers
 
-@method_decorator(vary_on_headers('User-Agent'), name='dispatch')
+@method_decorator([cache_page(300), vary_on_headers('User-Agent')], name='dispatch')
 class CasestudyList(generic.ListView):
     queryset = Casestudy.objects.select_related('client', 'location', 'industry').order_by("title")
     template_name = "casestudy/index.html"
     paginate_by = 4
     context_object_name = "casestudy_list"
 
-    @method_decorator(cache_control(no_cache=True, must_revalidate=True, no_store=True))
-    def dispatch(self, request, *args, **kwargs):
-        if request.user.is_authenticated:
-            response = super().dispatch(request, *args, **kwargs)
-            response['Cache-Control'] = 'no-cache, no-store, must-revalidate, private'
-            response['Pragma'] = 'no-cache'
-            response['Expires'] = '0'
-            return response
-        return super().dispatch(request, *args, **kwargs)
+    # Remove per-user cache control to allow full-page caching
 
 
 class CasestudyDetail(generic.DetailView):

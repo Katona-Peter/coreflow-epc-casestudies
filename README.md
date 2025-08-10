@@ -201,7 +201,7 @@ This project was developed using Agile methodology principles, emphasizing itera
 
 **Version Control**
 - Git with feature branch workflow
-- Regular commits with descriptive messages
+- Rogular commits with descriptive messages
 - Pull request reviews for code quality assurance
 
 **Development Environment**
