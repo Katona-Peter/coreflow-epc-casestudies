@@ -1,7 +1,13 @@
+# CoreFlow EPC Case Studies
+
+This project is a Django-based web application for managing and showcasing engineering, procurement, and construction (EPC) case studies. It features a robust admin interface, advanced image handling, responsive design, and a user-friendly comment system. The application is designed for easy deployment, maintainability, and extensibility, making it suitable for both demonstration and production use.
+
 [//]: # (Table of Contents)
 # Contents
 
 - [Technologies Used](#technologies-used)
+- [Improvement of UX](#improvement-of-ux)
+- [Agile project](#agile-project)
 - [Project Structure](#project-structure)
 - [Installation](#installation)
 - [Configuration](#configuration)
@@ -69,6 +75,15 @@ This project was developed using an Agile methodology, with a strong focus on th
 - **User stories** were written to capture requirements in a simple, non-technical format:  
    *As a [type of user], I want [some goal] so that [some reason].*
 - Stories were organized into an Agile board, allowing for clear tracking of progress and priorities.
+
+To further prioritize and manage requirements, the MoSCoW method was used to categorize user stories:
+
+- **Must have**: Essential features required for the project to function and deliver its core value.
+- **Should have**: Important features that are not critical for launch but add significant value or usability.
+- **Could have**: Desirable features that enhance the user experience but are not necessary for the minimum viable product.
+- **Won't have (this time)**: Features that are acknowledged but intentionally left out of the current scope, possibly for future development.
+
+This approach ensured that development efforts were focused on delivering the most valuable and necessary features first, while still keeping track of potential enhancements for later iterations.
 - Each sprint focused on delivering a set of user stories, ensuring incremental and continuous delivery of value.
 - Acceptance criteria were defined for each story to clarify when a feature was considered complete.
 - Regular reviews and feedback cycles helped refine stories and adapt to changing requirements.
@@ -78,6 +93,12 @@ This process fostered collaboration, transparency, and adaptability throughout t
 
 <p align="center">
    <img src="static/images/agile-action-plan.jpg" alt="Agile Action Plan" style="max-width: 400px; margin: 10px; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);" />
+</p>
+
+The individual actions have been grouped in 3 sprints:
+
+<p align="center">
+   <img src="static/images/milestones.jpg" alt="Milestones (Sprint Plan)" style="max-width: 700px; margin: 10px; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);" />
 </p>
 
 ## Project Structure
