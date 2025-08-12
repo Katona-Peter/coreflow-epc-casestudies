@@ -2,78 +2,71 @@
 
 CoreFlow EPC is an engineering company frsling with designing and building industral equipments for different indusries.
 A Django web application has been developped for showcasing CoreFlow EPC case studies. This project allows users to browse case studies with detailed information about clients, locations, industries of CoreFlow EPC projects, and visual documentation through image uploads.
-
-## Table of Contents
+![Industrial Color Palette](static/images/industrial.colors.png)
+![Industrial Colors](static/images/industrial-colors.png)
 
 - [Features](#features)
 - [UX Design Improvements](#ux-design-improvements)
 - [Agile Project Management](#agile-project-management)
 - [Technologies Used](#technologies-used)
-- [Project Structure](#project-structure)
-- [Installation](#installation)
-- [Configuration](#configuration)
-- [Usage](#usage)
 - [Models](#models)
 - [Admin Interface](#admin-interface)
-- [Testing](#testing)
-- [Deployment](#deployment)
-- [AI Implementation](#ai-implementation)
 - [Contributing](#contributing)
 - [License](#license)
 
 ## Features
 
 ### Current Features
-- **Case Study Display**: Browse case studies with card-based layout
+![Wireframe Smartphone](static/images/wireframe-smartphone.jpg)
 - **Image Upload System**: Upload and display images for each case study
 - **Background Images**: Dynamic background images on case study cards
-- **Categorization**: Organize case studies by client, location, and industry
+![Wireframe iPad](static/images/wireframe-ipad.jpg)
 - **Responsive Design**: Mobile-friendly Bootstrap-based UI
 - **Admin Interface**: Django admin for content management
-- **User Authentication**: Built-in Django authentication system
+![Wireframe Desktop](static/images/wireframe-desktop.jpg)
 - **Comments System**: User comments on case studies (with approval workflow)
 - **Search & Filter**: Filter case studies by various criteria
 
 ### Visual Features
-- **Card Layout**: Split-view cards with visible images and background images
+![Milestones](static/images/milestones.jpg)
 - **Custom Styling**: Blue border margins and custom border-radius effects
 - **Visual Indentation**: Clean spacing for client/location/industry information
 - **Responsive Grid**: Bootstrap-powered responsive grid system
 
 #### Industrial Color Palette
 
-The application employs a carefully selected industrial color palette that reflects CoreFlow EPC's professional character and expertise in the process industry.
+![ERD Diagram](static/images/ERD.png)
 
 ![Industrial Color Palette](staticfiles/images/industrial.colors.png)
 
 ![Industrial Colors](staticfiles/images/industrial-colors.png)
-
+![W3C HTML Validation Results](static/images/testing/w3c-validation/html-validation-results.png)
 **Color Philosophy**
-Our color scheme draws inspiration from industrial environments, manufacturing facilities, and energy infrastructure. These colors communicate reliability, technical expertise, and industrial strength - core values that define CoreFlow EPC's approach to energy performance consulting.
+![Base HTML W3C Validation](static/images/base_html%20w3c%20validation.png)
 
-**Primary Colors**
+![Admin W3C Validation](static/images/admin%20w3c%20validation.png)
 - **Steel Blue (#4A90A4)**: Represents technical precision and reliability
-- **Industrial Gray (#6C7B7F)**: Conveys professional expertise and stability  
+![Jigsaw CSS Validation](static/images/Jigsaw%20CSS%20Validation.png)
 - **Charcoal (#2C3E50)**: Provides strong contrast and industrial strength
-- **Slate (#34495E)**: Adds depth while maintaining professional appearance
+![CSS Jigsaw Validation Results](static/images/testing/css-validation/css-validation-results.png)
 
-**Accent Colors**
+![Casestudy Models PEP8 Validation](static/images/casestudy-models%20PEP8%20validation.png)
 - **Safety Orange (#E67E22)**: Highlights important information and calls-to-action
-- **Steel Silver (#BDC3C7)**: Used for subtle borders and secondary elements
+![Casestudy Views PEP8 Validation](static/images/casestudy-views%20PEP8%20validation.png)
 - **Deep Navy (#1B2631)**: Provides maximum contrast for critical text elements
-
+![Casestudy Forms PEP8 Validation](static/images/casestudy-forms%20PEP8%20validation.png)
 **Design Rationale**
-This industrial-inspired palette creates a visual connection to the manufacturing and energy sectors that CoreFlow EPC serves. The combination of cool blues and grays with warm orange accents creates a professional yet approachable aesthetic that builds trust with clients while emphasizing technical competence.
+![Django Basic View Test Results](static/images/test%20casestudy.test_views_basic%20-v%202.png)
 
-The colors work harmoniously to:
+![Django GET View Test Results](static/images/test%20casestudy.test_views_get%20-v%202.png)
 - **Establish Authority**: Deep blues and grays convey expertise and professionalism
-- **Ensure Clarity**: High contrast ratios guarantee excellent readability
+![Django POST View Test Results](static/images/test%20casestudy.test_views_post%20-v%202.png)
 - **Guide Attention**: Strategic use of orange guides users to important actions
-- **Reflect Industry**: Colors echo the industrial environments where CoreFlow EPC assessments take place
+![Django Form Test Results](static/images/test%20casestudy.test_forms%20-v%202.png)
 
-padding: 20px;
+<img src="static/images/lighthouse.jpg" alt="Lighthouse General Test Results" style="max-width: 400px; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); margin: 10px;" />
 border-radius: 8px;
-
+<img src="static/images/performance.jpg" alt="Lighthouse Performance Test" style="max-width: 400px; border-radius: 8px; box-shadow: 0, 2px, 8px rgba(0,0,0,0.1); margin: 10px;" />
 ## UX Design Improvements
 
 ### Advanced Visual Design Implementation
