@@ -1,12 +1,13 @@
 # CoreFlow EPC Case Studies
 
-A Django web application for showcasing CoreFlow EPC case studies. This project allows users to browse case studies with detailed information about clients, locations, industries of CoreFlow EPC projects, and visual documentation through image uploads.
-
-![CoreFlow EPC Case Studies](static/images/default.png)
+CoreFlow EPC is an engineering company frsling with designing and building industral equipments for different indusries.
+A Django web application has been developped for showcasing CoreFlow EPC case studies. This project allows users to browse case studies with detailed information about clients, locations, industries of CoreFlow EPC projects, and visual documentation through image uploads.
 
 ## Table of Contents
 
 - [Features](#features)
+- [UX Design Improvements](#ux-design-improvements)
+- [Agile Project Management](#agile-project-management)
 - [Technologies Used](#technologies-used)
 - [Project Structure](#project-structure)
 - [Installation](#installation)
@@ -16,6 +17,7 @@ A Django web application for showcasing CoreFlow EPC case studies. This project 
 - [Admin Interface](#admin-interface)
 - [Testing](#testing)
 - [Deployment](#deployment)
+- [AI Implementation](#ai-implementation)
 - [Contributing](#contributing)
 - [License](#license)
 
@@ -69,6 +71,9 @@ The colors work harmoniously to:
 - **Guide Attention**: Strategic use of orange guides users to important actions
 - **Reflect Industry**: Colors echo the industrial environments where CoreFlow EPC assessments take place
 
+padding: 20px;
+border-radius: 8px;
+
 ## UX Design Improvements
 
 ### Advanced Visual Design Implementation
@@ -97,29 +102,19 @@ During the development process, we implemented sophisticated visual design solut
 - Thoughtful padding (20px) ensures comfortable content consumption
 - Visual harmony between overlay and content elements
 
-#### Design Philosophy
+### Wireframes
 
-The best results come from experimenting with creative design solutions. The way the case study image now serves as both the focal point AND the atmospheric background really elevates the entire page aesthetic. It makes each case study feel unique and immersive while maintaining perfect readability.
+The following wireframes illustrate the initial design concepts for the application across different devices. All wireframes were created using Balsamiq:
 
-This approach transforms a simple detail page into something that feels modern and engaging, creating a sophisticated and immersive visual experience that sets the application apart from conventional layouts.
+**Smartphone:**
+![Wireframe Smartphone](staticfiles/images/wireframe-smartphone.jpg)
 
-#### Technical Implementation
+**iPad:**
+![Wireframe iPad](staticfiles/images/wireframe-ipad.jpg)
 
-```css
-/* Background image with full coverage */
-background-image: url('image.jpg');
-background-size: cover;
-background-position: center;
-background-repeat: no-repeat;
-background-attachment: fixed;
+**Desktop:**
+![Wireframe Desktop](staticfiles/images/wireframe-desktop.jpg)
 
-/* Semi-transparent overlay */
-background-color: rgba(255, 255, 255, 0.9);
-padding: 20px;
-border-radius: 8px;
-```
-
-This innovative design approach demonstrates how creative technical solutions can significantly enhance user experience and visual appeal.
 
 ## Agile Project Management
 
@@ -127,7 +122,10 @@ This innovative design approach demonstrates how creative technical solutions ca
 
 This project was developed using Agile methodology principles, emphasizing iterative development, continuous improvement, and flexible response to changing requirements. The development process focused on delivering working software incrementally while maintaining high code quality and user experience standards.
 
-**📋 Project Management**: View the complete sprint planning and task management on our [Sprint Board](https://github.com/users/Katona-Peter/projects/10)
+elet**📋 Project Management**: View the complete sprint planning and task management on our [Sprint Board](https://github.com/users/Katona-Peter/projects/10)
+![Agile Action Plan](staticfiles/images/agile-action-plan.jpg)
+\n
+![Milestones](staticfiles/images/milestones.jpg)
 
 #### Project Planning and User Stories
 
@@ -145,6 +143,17 @@ This project was developed using Agile methodology principles, emphasizing itera
 - As a user, I want an intuitive interface so that I can easily navigate the application
 - As a mobile user, I want a responsive design so that I can access content on any device
 - As a visitor, I want engaging visuals so that the content is appealing and professional
+
+### Prioritization of User Stories
+
+To ensure that the most valuable features were delivered first, the MoSCoW prioritization method was applied to all user stories:
+
+- **Must have**: Essential features required for the application to function (e.g., case study display, user authentication, admin interface).
+- **Should have**: Important but not vital features that add significant value (e.g., comment approval workflow, image upload system, responsive design).
+- **Could have**: Desirable features that enhance user experience but are not critical (e.g., advanced search/filtering, parallax effects, icon integration).
+- **Won't have (this time)**: Features considered out of scope for the current release but may be included in future updates (e.g., PDF export, multi-language support).
+
+By categorizing user stories using MoSCoW, the team was able to focus on delivering core functionality first, while still planning for enhancements and future growth. This approach ensured that the project met essential requirements and provided a clear roadmap for iterative development.
 
 #### Sprint Planning and Execution
 
@@ -443,6 +452,9 @@ The Django admin interface provides:
 - **Comment Moderation**: Approve/reject user comments
 - **User Management**: Handle user accounts and permissions
 
+**Django Administration Window:**
+![Django Administration Window](staticfiles/images/django-administration.jpg)
+
 ## Testing
 
 ### Comprehensive Testing Strategy
@@ -620,15 +632,29 @@ lighthouse https://your-app-url.herokuapp.com/ --output html --output-path ./lig
 - Accessibility compliance verification
 - Progressive Web App features assessment
 
+
 **Target Scores**:
 - Performance: 90+ (Green)
 - Accessibility: 95+ (Green)
 - Best Practices: 90+ (Green)
 - SEO: 90+ (Green)
 
+**Major Actions Taken to Improve Performance:**
+1. **Image Optimization:** All uploaded and static images are compressed and resized to reduce file size and speed up page loads, using Pillow and Cloudinary.
+2. **Static File Management:** Implemented WhiteNoise for efficient static file serving and enabled browser caching for CSS, JS, and images.
+3. **Efficient Template Rendering:** Used template fragment caching and minimized database queries in views to reduce server response time and improve overall site speed.
+
 **Screenshots**: Lighthouse reports stored in `staticfiles/images/testing/lighthouse/`
 
-![Lighthouse Performance Report](staticfiles/images/testing/lighthouse/lighthouse-performance-report.png)
+
+<p align="center">
+   <img src="staticfiles/images/lighthouse.jpg" alt="Lighthouse General Test Results" style="max-width: 400px; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); margin: 10px;" />
+   <br><strong>General Test Results</strong>
+</p>
+<p align="center">
+   <img src="staticfiles/images/performance.jpg" alt="Lighthouse Performance Test" style="max-width: 400px; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); margin: 10px;" />
+   <br><strong>Performance Test</strong>
+</p>
 
 #### Django Automated Testing
 
@@ -985,7 +1011,7 @@ For a complete documentation index, see [`docs/README.md`](docs/README.md).
 ## Deployment
 
 ### 🚀 **Live Application**
-- **Production URL**: [https://coreflow-epc-casestudies-faf59a0d5c41.herokuapp.com/](https://coreflow-epc-casestudies-faf59a0d5c41.herokuapp.com/)
+- **Production URL**: [https://coreflow-epc-casestudies-9c6524ceb3f5.herokuapp.com/](https://coreflow-epc-casestudies-9c6524ceb3f5.herokuapp.com/)
 - **Platform**: Heroku
 - **Environment**: Django with WhiteNoise for static files
 
@@ -1071,6 +1097,24 @@ heroku run python manage.py createsuperuser
 3. **Database Migration Issues**
    - Delete migration files and regenerate: `python manage.py makemigrations`
    - Reset database if needed: `python manage.py flush`
+
+## AI Implementation
+
+Artificial Intelligence (AI) played a significant role in the development and refinement of this project. The following aspects highlight how AI assistance was leveraged:
+
+- **Performance Optimization**: AI provided guidance and actionable suggestions to improve webpage performance, especially following Lighthouse test results.
+- **Authentication Solutions**: AI support was instrumental in resolving issues related to user authentication and access control.
+- **Production Safety**: AI helped elaborate scripts and logic to ensure `DEBUG=False` is enforced in production environments, enhancing security.
+- **Troubleshooting**: AI was used to quickly identify, diagnose, and resolve a variety of technical issues throughout the project lifecycle.
+- **Code Generation**: AI accelerated the development process by generating standard code snippets, reducing manual effort and increasing productivity.
+
+## Credits
+
+- Special thanks to Dillon McCaffrey for guidance and feedback throughout the project.
+- The Django documentation and Stack Overflow community for invaluable troubleshooting resources.
+- Bootstrap and FontAwesome for UI components and icons.
+- Balsamiq for wirestock design software.
+- Code Institute for the project template and ongoing support.
 
 ## License
 

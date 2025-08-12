@@ -20,7 +20,7 @@ Welcome to the CoreFlow EPC Case Studies documentation. This folder contains all
 ## 🔗 Quick Links
 
 - **Main README**: [`../README.md`](../README.md) - Project overview and quick start
-- **Live Application**: [CoreFlow EPC on Heroku](https://coreflow-epc-casestudies-faf59a0d5c41.herokuapp.com/)
+- **Live Application**: [CoreFlow EPC on Heroku](https://coreflow-epc-casestudies-9c6524ceb3f5.herokuapp.com/)
 - **GitHub Repository**: [Source Code](https://github.com/Katona-Peter/coreflow-epc-casestudies)
 
 ## 📋 Project Structure
