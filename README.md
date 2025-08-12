@@ -2,8 +2,8 @@
 
 CoreFlow EPC is an engineering company frsling with designing and building industral equipments for different indusries.
 A Django web application has been developped for showcasing CoreFlow EPC case studies. This project allows users to browse case studies with detailed information about clients, locations, industries of CoreFlow EPC projects, and visual documentation through image uploads.
-![Industrial Color Palette](static/images/industrial.colors.png)
-![Industrial Colors](static/images/industrial-colors.png)
+
+![Logo](static/images/logo.png)
 
 - [Features](#features)
 - [UX Design Improvements](#ux-design-improvements)
@@ -69,70 +69,26 @@ border-radius: 8px;
 <img src="static/images/performance.jpg" alt="Lighthouse Performance Test" style="max-width: 400px; border-radius: 8px; box-shadow: 0, 2px, 8px rgba(0,0,0,0.1); margin: 10px;" />
 ## UX Design Improvements
 
-### Advanced Visual Design Implementation
-
+![Industrial Color Palette](staticfiles/images/industrial.colors.png)
+![Industrial Colors](staticfiles/images/industrial-colors.png)
 During the development process, we implemented sophisticated visual design solutions that significantly enhanced the user experience. The case study detail page showcases an innovative approach to visual storytelling through creative use of background imagery.
-
-#### Key Design Elements
-
-**Full Background Image Coverage**
-- The case study image serves as both a focal point and atmospheric background
-- Dynamic background sizing ensures complete card coverage across all device sizes
-- Seamless integration between content and visual elements
-
 **Semi-transparent Overlay for Readability**
 - Strategic use of `rgba(255, 255, 255, 0.9)` overlay ensures perfect text readability
 - Maintains visual impact while preserving content accessibility
 - Creates depth and layering in the design hierarchy
-
-**Fixed Background Attachment for Parallax Effect**
-- Subtle parallax scrolling creates a modern, engaging user experience
-- Adds depth and sophistication to the page interaction
-- Enhances the immersive quality of each case study
-
-**Rounded Corners and Proper Spacing**
-- Consistent 8px border-radius creates a polished, professional appearance
-- Thoughtful padding (20px) ensures comfortable content consumption
 - Visual harmony between overlay and content elements
-
-### Wireframes
-
-The following wireframes illustrate the initial design concepts for the application across different devices. All wireframes were created using Balsamiq:
 
 **Smartphone:**
 ![Wireframe Smartphone](staticfiles/images/wireframe-smartphone.jpg)
 
-**iPad:**
 ![Wireframe iPad](staticfiles/images/wireframe-ipad.jpg)
-
 **Desktop:**
-![Wireframe Desktop](staticfiles/images/wireframe-desktop.jpg)
 
 
-## Agile Project Management
-
-### Development Methodology
-
-This project was developed using Agile methodology principles, emphasizing iterative development, continuous improvement, and flexible response to changing requirements. The development process focused on delivering working software incrementally while maintaining high code quality and user experience standards.
-
-elet**📋 Project Management**: View the complete sprint planning and task management on our [Sprint Board](https://github.com/users/Katona-Peter/projects/10)
 ![Agile Action Plan](staticfiles/images/agile-action-plan.jpg)
-\n
-![Milestones](staticfiles/images/milestones.jpg)
-
-#### Project Planning and User Stories
-
 **Epic: Case Study Management System**
-- As a site administrator, I want to manage case studies so that I can showcase our EPC projects effectively
 - As a visitor, I want to browse case studies so that I can learn about EPC implementations
-- As a registered user, I want to comment on case studies so that I can engage with the content
-
-**Epic: User Authentication and Interaction**
-- As a new user, I want to register an account so that I can participate in discussions
-- As a returning user, I want to log in securely so that I can access my account features
 - As a user, I want my comments to be moderated so that the platform maintains quality content
-
-**Epic: Visual Design and User Experience**
 - As a user, I want an intuitive interface so that I can easily navigate the application
 - As a mobile user, I want a responsive design so that I can access content on any device
 - As a visitor, I want engaging visuals so that the content is appealing and professional
