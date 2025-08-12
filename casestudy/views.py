@@ -26,7 +26,6 @@ from django.utils.decorators import method_decorator
 from django.views.decorators.cache import cache_control, cache_page
 from django.views.decorators.vary import vary_on_headers
 
-@method_decorator([cache_page(300), vary_on_headers('User-Agent')], name='dispatch')
 class CasestudyList(generic.ListView):
     queryset = Casestudy.objects.select_related('client', 'location', 'industry').order_by("title")
     template_name = "casestudy/index.html"

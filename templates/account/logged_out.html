@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="alert alert-info message-alert" role="alert">
+        <h4 class="alert-heading">You have successfully logged out.</h4>
+        <p>Thank you for visiting. You are now signed out.</p>
+        <hr>
+        <a href="{{ login_url }}" class="btn btn-primary">Log in again</a>
+        <a href="{{ home_url }}" class="btn btn-secondary ms-2">Return Home</a>
+    </div>
+</div>
+{% endblock %}
