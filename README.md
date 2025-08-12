@@ -1,185 +1,29 @@
-# CoreFlow EPC Case Studies
+[//]: # (Table of Contents)
+# Contents
 
-CoreFlow EPC is an engineering company frsling with designing and building industral equipments for different indusries.
-A Django web application has been developped for showcasing CoreFlow EPC case studies. This project allows users to browse case studies with detailed information about clients, locations, industries of CoreFlow EPC projects, and visual documentation through image uploads.
-
-![Logo](static/images/logo.png)
-
-- [Features](#features)
-- [UX Design Improvements](#ux-design-improvements)
-- [Agile Project Management](#agile-project-management)
 - [Technologies Used](#technologies-used)
+- [Project Structure](#project-structure)
+- [Installation](#installation)
+- [Configuration](#configuration)
+- [Usage](#usage)
 - [Models](#models)
 - [Admin Interface](#admin-interface)
+- [Testing](#testing)
+- [Documentation](#documentation)
+- [Deployment](#deployment)
 - [Contributing](#contributing)
+- [Future Enhancements](#future-enhancements)
+- [Troubleshooting](#troubleshooting)
+- [AI Implementation](#ai-implementation)
+- [Credits](#credits)
 - [License](#license)
+- [Contact](#contact)
 
-## Features
+[RESTORED CONTENT FROM COMMIT 7d575a0]
 
-### Current Features
-![Wireframe Smartphone](static/images/wireframe-smartphone.jpg)
-- **Image Upload System**: Upload and display images for each case study
-- **Background Images**: Dynamic background images on case study cards
-![Wireframe iPad](static/images/wireframe-ipad.jpg)
-- **Responsive Design**: Mobile-friendly Bootstrap-based UI
-- **Admin Interface**: Django admin for content management
-![Wireframe Desktop](static/images/wireframe-desktop.jpg)
-- **Comments System**: User comments on case studies (with approval workflow)
-- **Search & Filter**: Filter case studies by various criteria
-
-### Visual Features
-![Milestones](static/images/milestones.jpg)
-- **Custom Styling**: Blue border margins and custom border-radius effects
-- **Visual Indentation**: Clean spacing for client/location/industry information
-- **Responsive Grid**: Bootstrap-powered responsive grid system
-
-#### Industrial Color Palette
-
-![ERD Diagram](static/images/ERD.png)
-
-![Industrial Color Palette](staticfiles/images/industrial.colors.png)
-
-![Industrial Colors](staticfiles/images/industrial-colors.png)
-![W3C HTML Validation Results](static/images/testing/w3c-validation/html-validation-results.png)
-**Color Philosophy**
-![Base HTML W3C Validation](static/images/base_html%20w3c%20validation.png)
-
-![Admin W3C Validation](static/images/admin%20w3c%20validation.png)
-- **Steel Blue (#4A90A4)**: Represents technical precision and reliability
-![Jigsaw CSS Validation](static/images/Jigsaw%20CSS%20Validation.png)
-- **Charcoal (#2C3E50)**: Provides strong contrast and industrial strength
-![CSS Jigsaw Validation Results](static/images/testing/css-validation/css-validation-results.png)
-
-![Casestudy Models PEP8 Validation](static/images/casestudy-models%20PEP8%20validation.png)
-- **Safety Orange (#E67E22)**: Highlights important information and calls-to-action
-![Casestudy Views PEP8 Validation](static/images/casestudy-views%20PEP8%20validation.png)
-- **Deep Navy (#1B2631)**: Provides maximum contrast for critical text elements
-![Casestudy Forms PEP8 Validation](static/images/casestudy-forms%20PEP8%20validation.png)
-**Design Rationale**
-![Django Basic View Test Results](static/images/test%20casestudy.test_views_basic%20-v%202.png)
-
-![Django GET View Test Results](static/images/test%20casestudy.test_views_get%20-v%202.png)
-- **Establish Authority**: Deep blues and grays convey expertise and professionalism
-![Django POST View Test Results](static/images/test%20casestudy.test_views_post%20-v%202.png)
-- **Guide Attention**: Strategic use of orange guides users to important actions
-![Django Form Test Results](static/images/test%20casestudy.test_forms%20-v%202.png)
-
-<img src="static/images/lighthouse.jpg" alt="Lighthouse General Test Results" style="max-width: 400px; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); margin: 10px;" />
-border-radius: 8px;
-<img src="static/images/performance.jpg" alt="Lighthouse Performance Test" style="max-width: 400px; border-radius: 8px; box-shadow: 0, 2px, 8px rgba(0,0,0,0.1); margin: 10px;" />
-## UX Design Improvements
-
-![Industrial Color Palette](staticfiles/images/industrial.colors.png)
-![Industrial Colors](staticfiles/images/industrial-colors.png)
-During the development process, we implemented sophisticated visual design solutions that significantly enhanced the user experience. The case study detail page showcases an innovative approach to visual storytelling through creative use of background imagery.
-**Semi-transparent Overlay for Readability**
-- Strategic use of `rgba(255, 255, 255, 0.9)` overlay ensures perfect text readability
-- Maintains visual impact while preserving content accessibility
-- Creates depth and layering in the design hierarchy
-- Visual harmony between overlay and content elements
-
-**Smartphone:**
-![Wireframe Smartphone](staticfiles/images/wireframe-smartphone.jpg)
-
-![Wireframe iPad](staticfiles/images/wireframe-ipad.jpg)
-**Desktop:**
-
-
-![Agile Action Plan](staticfiles/images/agile-action-plan.jpg)
-**Epic: Case Study Management System**
-- As a visitor, I want to browse case studies so that I can learn about EPC implementations
-- As a user, I want my comments to be moderated so that the platform maintains quality content
-- As a user, I want an intuitive interface so that I can easily navigate the application
-- As a mobile user, I want a responsive design so that I can access content on any device
-- As a visitor, I want engaging visuals so that the content is appealing and professional
-
-### Prioritization of User Stories
-
-To ensure that the most valuable features were delivered first, the MoSCoW prioritization method was applied to all user stories:
-
-- **Must have**: Essential features required for the application to function (e.g., case study display, user authentication, admin interface).
-- **Should have**: Important but not vital features that add significant value (e.g., comment approval workflow, image upload system, responsive design).
-- **Could have**: Desirable features that enhance user experience but are not critical (e.g., advanced search/filtering, parallax effects, icon integration).
-- **Won't have (this time)**: Features considered out of scope for the current release but may be included in future updates (e.g., PDF export, multi-language support).
-
-By categorizing user stories using MoSCoW, the team was able to focus on delivering core functionality first, while still planning for enhancements and future growth. This approach ensured that the project met essential requirements and provided a clear roadmap for iterative development.
-
-#### Sprint Planning and Execution
-
-**Sprint 1: Foundation and Core Functionality**
-- Project initialization and Django setup
-- Basic model creation (Casestudy, Client, Location, Industry)
-- Initial admin interface configuration
-- Basic template structure
-- Case study listing and detail views
-- Image upload system implementation
-- URL routing and navigation
-- Basic styling and responsive design
-
-**Sprint 2: User Features and Authentication**
-- User authentication system integration
-- Comment system implementation with approval workflow
-- User registration and login functionality
-- Security enhancements
-- Advanced UI/UX improvements
-- Background image implementation
-- Icon integration and styling
-
-**Sprint 3: Visual Enhancement and Deployment**
-- Visual hierarchy optimization
-- Parallax effects and modern design elements
-- Comprehensive testing implementation
-- Bug fixes and performance optimization
-- Heroku deployment configuration
-- Documentation completion
-
-#### Agile Practices Implemented
-
-**Daily Development Reviews**
-- Regular code review and refactoring sessions
-- Continuous integration of new features
-- Immediate bug fixing and issue resolution
-
-**Iterative Design Process**
-- Continuous UI/UX improvements based on visual feedback
-- Responsive design testing across multiple devices
-- User experience optimization through iterative refinement
-
-**Flexible Requirements Management**
-- Adaptive approach to feature implementation
-- Prioritization based on user value and technical feasibility
-- Regular reassessment of project goals and timelines
-
-**Documentation and Knowledge Sharing**
-- Comprehensive README documentation
-- Inline code documentation and comments
-- Technical decision documentation for future reference
-
-#### Tools and Workflow
-
-**Version Control**
-- Git with feature branch workflow
-- Rogular commits with descriptive messages
-- Pull request reviews for code quality assurance
-
-**Development Environment**
-- Local development with Django development server
-- Environment variable management for configuration flexibility
-- Database migrations for schema management
-
-**Testing Strategy**
-- Unit tests for models and forms
-- Integration tests for views and user workflows
-- Manual testing for UI/UX validation
-
-**Deployment Pipeline**
-- Continuous deployment to Heroku
-- Environment-specific configuration management
-- Production monitoring and maintenance
-
-This Agile approach enabled the delivery of a comprehensive, user-friendly web application while maintaining code quality and incorporating continuous improvements throughout the development process.
 
 ## Technologies Used
+
 
 ### Backend
 - **Django 4.2.23**: Web framework
@@ -195,12 +39,46 @@ This Agile approach enabled the delivery of a comprehensive, user-friendly web a
 - **Font Awesome**: Icons
 - **JavaScript**: Interactive elements
 
+
 ### Additional Libraries
 - **django-allauth**: Authentication
 - **django-crispy-forms**: Form rendering
 - **django-summernote**: Rich text editor
 - **whitenoise**: Static file serving
 - **gunicorn**: WSGI server
+
+## Improvement of UX
+
+To ensure an optimal user experience (UX) across all devices, wireframes were created for the main breakpoints: smartphone, tablet, and desktop. These wireframes guided the responsive design and layout decisions throughout the project.
+
+<p align="center">
+   <img src="static/images/wireframe-smartphone.jpg" alt="Wireframe Smartphone" style="max-width: 200px; margin: 10px; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);" />
+   <img src="static/images/wireframe-ipad.jpg" alt="Wireframe iPad" style="max-width: 250px; margin: 10px; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);" />
+   <img src="static/images/wireframe-desktop.jpg" alt="Wireframe Desktop" style="max-width: 350px; margin: 10px; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);" />
+</p>
+
+
+*Wireframes for smartphone, tablet, and desktop breakpoints*
+
+## Agile project
+
+This project was developed using an Agile methodology, with a strong focus on the user story approach. Each feature and enhancement was planned and implemented based on user stories, which describe the desired functionality from the perspective of the end user. This approach ensured that development remained user-centric and prioritized real-world needs.
+
+### User Story Approach
+
+- **User stories** were written to capture requirements in a simple, non-technical format:  
+   *As a [type of user], I want [some goal] so that [some reason].*
+- Stories were organized into an Agile board, allowing for clear tracking of progress and priorities.
+- Each sprint focused on delivering a set of user stories, ensuring incremental and continuous delivery of value.
+- Acceptance criteria were defined for each story to clarify when a feature was considered complete.
+- Regular reviews and feedback cycles helped refine stories and adapt to changing requirements.
+
+
+This process fostered collaboration, transparency, and adaptability throughout the project lifecycle.
+
+<p align="center">
+   <img src="static/images/agile-action-plan.jpg" alt="Agile Action Plan" style="max-width: 400px; margin: 10px; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);" />
+</p>
 
 ## Project Structure
 
@@ -360,7 +238,7 @@ The application features an advanced image upload system:
 
 ![Database ERD](static/images/erd-diagram.png)
 
-![ERD Diagram](staticfiles/images/ERD.png)
+![ERD Diagram](static/images/ERD.png)
 
 The database schema consists of four main entities with clear relationships designed to support comprehensive case study management and user interaction:
 
@@ -402,7 +280,7 @@ The Django admin interface provides:
 - **User Management**: Handle user accounts and permissions
 
 **Django Administration Window:**
-![Django Administration Window](staticfiles/images/django-administration.jpg)
+![Django Administration Window](static/images/django-administration.jpg)
 
 ## Testing
 
@@ -433,19 +311,19 @@ It's crucial to understand the fundamental difference between validating pure HT
 2. **Source Code Validation**: Copy-paste rendered HTML from browser view-source
 3. **Batch Validation**: Test multiple pages systematically for comprehensive coverage
 
-**Screenshots**: Validation results will be documented with screenshots stored in `staticfiles/images/testing/w3c-validation/`
+**Screenshots**: Validation results will be documented with screenshots stored in `static/images/testing/w3c-validation/`
 
-![W3C HTML Validation Results](staticfiles/images/testing/w3c-validation/html-validation-results.png)
+![W3C HTML Validation Results](static/images/testing/base_html w3c validation.png)
 
 **Base HTML Template Validation Results**:
 
-![Base HTML W3C Validation](staticfiles/images/base_html%20w3c%20validation.png)
+![Base HTML W3C Validation](static/images/base_html%20w3c%20validation.png)
 
 *The base.html template validation demonstrates clean, semantic HTML structure with no errors or warnings, ensuring all pages built on this foundation maintain W3C compliance standards.*
 
 **Admin Interface Validation Results**:
 
-![Admin W3C Validation](staticfiles/images/admin%20w3c%20validation.png)
+![Admin W3C Validation](static/images/admin%20w3c%20validation.png)
 
 *The Django admin interface validation confirms that even complex administrative pages maintain W3C HTML standards, demonstrating comprehensive attention to web standards across all application components.*
 
@@ -459,7 +337,7 @@ CSS validation is crucial for ensuring cross-browser compatibility, proper rende
 
 **CSS Validation Results**:
 
-![Jigsaw CSS Validation](staticfiles/images/Jigsaw%20CSS%20Validation.png)
+![Jigsaw CSS Validation](static/images/Jigsaw%20CSS%20Validation.png)
 
 *The CSS validation demonstrates clean, standards-compliant stylesheet implementation with proper syntax, valid property declarations, and cross-browser compatibility. This ensures consistent rendering across all modern browsers and devices.*
 
@@ -507,9 +385,9 @@ The comprehensive CSS validation covers multiple critical aspects of stylesheet 
 
 **Expected Results**: Zero errors, with possible warnings for vendor prefixes or CSS3 experimental features
 
-**Screenshots**: CSS validation results stored in `staticfiles/images/testing/css-validation/`
+**Screenshots**: CSS validation results stored in `static/images/testing/css-validation/`
 
-![CSS Jigsaw Validation Results](staticfiles/images/testing/css-validation/css-validation-results.png)
+![CSS Jigsaw Validation Results](static/images/Jigsaw CSS Validation.png)
 
 #### Python Code Quality - PEP8 Validation
 
@@ -529,17 +407,17 @@ Python code quality is essential for maintainability, readability, and professio
 **Validation Results by Module**:
 
 **Models Validation**:
-![Casestudy Models PEP8 Validation](staticfiles/images/casestudy-models%20PEP8%20validation.png)
+![Casestudy Models PEP8 Validation](static/images/casestudy-models%20PEP8%20validation.png)
 
 *The models.py file validation shows clean, well-structured Django model definitions with proper field declarations, meta classes, and method implementations following PEP8 standards.*
 
 **Views Validation**:
-![Casestudy Views PEP8 Validation](staticfiles/images/casestudy-views%20PEP8%20validation.png)
+![Casestudy Views PEP8 Validation](static/images/casestudy-views%20PEP8%20validation.png)
 
 *The views.py file demonstrates proper Django view implementation with correct import statements, class-based views, and method definitions maintaining PEP8 compliance.*
 
 **Forms Validation**:
-![Casestudy Forms PEP8 Validation](staticfiles/images/casestudy-forms%20PEP8%20validation.png)
+![Casestudy Forms PEP8 Validation](static/images/casestudy-forms%20PEP8%20validation.png)
 
 *The forms.py file validation confirms clean form class definitions with proper field declarations, validation methods, and meta class configurations adhering to PEP8 guidelines.*
 
@@ -593,15 +471,15 @@ lighthouse https://your-app-url.herokuapp.com/ --output html --output-path ./lig
 2. **Static File Management:** Implemented WhiteNoise for efficient static file serving and enabled browser caching for CSS, JS, and images.
 3. **Efficient Template Rendering:** Used template fragment caching and minimized database queries in views to reduce server response time and improve overall site speed.
 
-**Screenshots**: Lighthouse reports stored in `staticfiles/images/testing/lighthouse/`
+**Screenshots**: Lighthouse reports stored in `static/images/testing/lighthouse/`
 
 
 <p align="center">
-   <img src="staticfiles/images/lighthouse.jpg" alt="Lighthouse General Test Results" style="max-width: 400px; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); margin: 10px;" />
+   <img src="static/images/lighthouse.jpg" alt="Lighthouse General Test Results" style="max-width: 400px; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); margin: 10px;" />
    <br><strong>General Test Results</strong>
 </p>
 <p align="center">
-   <img src="staticfiles/images/performance.jpg" alt="Lighthouse Performance Test" style="max-width: 400px; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); margin: 10px;" />
+   <img src="static/images/performance.jpg" alt="Lighthouse Performance Test" style="max-width: 400px; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); margin: 10px;" />
    <br><strong>Performance Test</strong>
 </p>
 
@@ -755,17 +633,17 @@ The Django application includes thorough view testing that validates all aspects
 **View Test Execution Screenshots**:
 
 **Basic View Testing Results**:
-![Django Basic View Test Results](staticfiles/images/test%20casestudy.test_views_basic%20-v%202.png)
+![Django Basic View Test Results](static/images/test%20casestudy.test_views_basic%20-v%202.png)
 
 *Basic view testing validates fundamental application operations including URL resolution, view instantiation, basic response generation, and core Django functionality. These tests ensure the application's foundational structure is working correctly.*
 
 **GET Request View Testing Results**:
-![Django GET View Test Results](staticfiles/images/test%20casestudy.test_views_get%20-v%202.png)
+![Django GET View Test Results](static/images/test%20casestudy.test_views_get%20-v%202.png)
 
 *GET request testing comprehensively validates all view endpoints, ensuring proper template rendering, context data delivery, HTTP status codes, and content validation. This testing confirms that users can successfully access and view all application content.*
 
 **POST Request View Testing Results**:
-![Django POST View Test Results](staticfiles/images/test%20casestudy.test_views_post%20-v%202.png)
+![Django POST View Test Results](static/images/test%20casestudy.test_views_post%20-v%202.png)
 
 *POST request testing validates form processing, data submission handling, comment creation workflows, and user interaction functionality. This ensures that all interactive features work securely and reliably.*
 
@@ -805,7 +683,7 @@ Django forms are critical components that handle user input validation, data san
 
 **Form Test Execution Screenshots**:
 
-![Django Form Test Results](staticfiles/images/test%20casestudy.test_forms%20-v%202.png)
+![Django Form Test Results](static/images/test%20casestudy.test_forms%20-v%202.png)
 
 *Form testing validates comprehensive input validation, field requirements, data type checking, and error message generation. These tests ensure that all user input is properly validated, sanitized, and processed securely before database operations.*
 
@@ -868,7 +746,7 @@ The comprehensive form testing validates multiple critical aspects of user input
 
 **Screenshot Storage Structure**:
 ```
-staticfiles/images/testing/
+static/images/testing/
 ├── w3c-validation/
 │   ├── html-validation-home.png
 │   ├── html-validation-detail.png
@@ -904,7 +782,7 @@ staticfiles/images/testing/
 - Regular performance monitoring
 - Accessibility compliance checks
 
-*Note: Detailed test results with screenshots will be added to the `staticfiles/images/testing/` directory to provide visual documentation of all testing procedures and their outcomes.*
+*Note: Detailed test results with screenshots will be added to the `static/images/testing/` directory to provide visual documentation of all testing procedures and their outcomes.*
 
 ## 📚 Documentation
 
